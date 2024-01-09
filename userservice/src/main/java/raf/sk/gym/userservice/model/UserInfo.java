@@ -1,8 +1,7 @@
 package raf.sk.gym.userservice.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
 
 import java.time.LocalDate;
 
@@ -35,7 +34,7 @@ public record UserInfo(
         String username,
         String password,
         String email,
-        @Column(name = "dob") LocalDate dateOfBirth,
+        @Column("dob") LocalDate dateOfBirth,
         String firstName,
         String lastName,
         String userType) {

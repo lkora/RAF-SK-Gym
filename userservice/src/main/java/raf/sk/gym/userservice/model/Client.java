@@ -1,10 +1,10 @@
 package raf.sk.gym.userservice.model;
 
-import jakarta.persistence.Id;
+
+import org.springframework.data.annotation.Id;
 
 /**
  * The Client class represents a client entity in the system.
- *
  * It contains information such as the client's unique identifier, user information,
  * card number, and the number of scheduled trainings.
  */

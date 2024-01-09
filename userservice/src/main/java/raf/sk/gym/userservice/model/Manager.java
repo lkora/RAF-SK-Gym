@@ -1,6 +1,7 @@
 package raf.sk.gym.userservice.model;
 
-import jakarta.persistence.Id;
+
+import org.springframework.data.annotation.Id;
 
 import java.time.LocalDate;
 

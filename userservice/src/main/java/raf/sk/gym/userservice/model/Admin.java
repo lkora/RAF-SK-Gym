@@ -1,7 +1,7 @@
 package raf.sk.gym.userservice.model;
 
 
-import jakarta.persistence.Id;
+import org.springframework.data.annotation.Id;
 
 /**
  * The Admin class represents an administrative user.
