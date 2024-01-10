@@ -4,7 +4,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.test.context.TestConfiguration;
 /**
  * Provides live reload capabilities
- *
  * */
 @TestConfiguration(proxyBeanMethods = false)
 public class TestGatewayApplication {
