@@ -10,6 +10,9 @@ spring:
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       group-id: myGroup
       auto-offset-reset: earliest
+  threads:
+    virtual:
+      enabled: true
 eureka:
   client:
     service-url:

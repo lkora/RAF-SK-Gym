@@ -117,7 +117,7 @@ Response:
 NOTES
 - The ticket number is generated for the user in the database as well as the appointment number, or is the appointment number selected at registration?
 - Reponse also sends a notification via the messaging service, above all the data of the registered user should be sent in this message
-- the password is sent in plaintext but is hashed with a secret that is stored in the customer service
+- the password is sent in plaintext but is hashed with a secret stored in the customer service
 
 Example table:
 
