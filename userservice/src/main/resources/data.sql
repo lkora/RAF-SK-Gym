@@ -1,3 +1,4 @@
+DELETE FROM "user";
 INSERT INTO "user" (username, password, email, birth_date, first_name, last_name, user_type, is_banned)
 VALUES ('admin', '$2a$12$oSBM6QQ19VHBMyvmc1cKzuP/AbNmE39RwIOMdfG4mewL5xwAlE2eC', 'johndoe@example.com', '1990-01-01',
         'John', 'Doe', 'admin', false),

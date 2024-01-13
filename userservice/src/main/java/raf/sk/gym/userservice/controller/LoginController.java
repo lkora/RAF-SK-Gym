@@ -16,7 +16,6 @@ import raf.sk.gym.userservice.dto.request.LoginRequest;
 import raf.sk.gym.userservice.dto.response.GeneralResponse;
 import raf.sk.gym.userservice.dto.response.JwtResponse;
 import raf.sk.gym.userservice.security.JwtTokenProvider;
-import raf.sk.gym.userservice.service.UserService;
 
 @RestController
 @RequestMapping("/auth/")
@@ -28,30 +27,34 @@ public class LoginController {
 
     private final JwtTokenProvider jwtTokenProvider;
 
-    private final UserService userService;
 
-    public LoginController(AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider, UserService userService) {
+    public LoginController(AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenProvider = jwtTokenProvider;
-        this.userService = userService;
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
         try {
-        Authentication authentication = new UsernamePasswordAuthenticationToken(loginRequest.username(), loginRequest.password());
-        Authentication authenticated = authenticationManager.authenticate(authentication);
-        SecurityContextHolder.getContext().setAuthentication(authenticated);
-        String jwt = jwtTokenProvider.generateToken(authenticated);
-        return ResponseEntity.ok(new JwtResponse(jwt));
-    } catch (BadCredentialsException e) {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new GeneralResponse("Invalid username or password."));
-    } catch (DisabledException e) {
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new GeneralResponse("User is disabled"));
-    } catch (LockedException e) {
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new GeneralResponse("User account is locked"));
-    } catch (AuthenticationException e) {
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new GeneralResponse("User account is not activated or banned"));
-    }
+            Authentication authentication = new UsernamePasswordAuthenticationToken(loginRequest.username(),
+                    loginRequest.password());
+            Authentication authenticated = authenticationManager.authenticate(authentication);
+            SecurityContextHolder.getContext()
+                    .setAuthentication(authenticated);
+            String jwt = jwtTokenProvider.generateToken(authenticated);
+            return ResponseEntity.ok(new JwtResponse(jwt));
+        } catch (BadCredentialsException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(new GeneralResponse("Invalid username or password."));
+        } catch (DisabledException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(new GeneralResponse("User is disabled"));
+        } catch (LockedException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(new GeneralResponse("User account is locked"));
+        } catch (AuthenticationException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(new GeneralResponse("User account is not activated or banned"));
+        }
     }
 }

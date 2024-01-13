@@ -1,6 +1,6 @@
 -- noinspection SqlNoDataSourceInspectionForFile
 
-CREATE TABLE "user"
+CREATE TABLE IF NOT EXISTS "user"
 (
     id         SERIAL PRIMARY KEY,
     username   VARCHAR(255) NOT NULL UNIQUE,
@@ -13,14 +13,14 @@ CREATE TABLE "user"
     is_banned  boolean
 );
 
-CREATE TABLE "client"
+CREATE TABLE IF NOT EXISTS "client"
 (
     client_id                     INT REFERENCES "user" (id) ON DELETE CASCADE,
     member_card_number            INT UNIQUE,
     number_of_scheduled_trainings INT
 );
 
-CREATE TABLE "manager"
+CREATE TABLE IF NOT EXISTS "manager"
 (
     manager_id INT REFERENCES "user" (id) ON DELETE CASCADE,
     gym_name   VARCHAR(255),
