@@ -17,6 +17,17 @@
 		1B91BF2F2B53258C004570D7 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B91BF2E2B53258C004570D7 /* APIRequest.swift */; };
 		1B91BF312B532599004570D7 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B91BF302B532599004570D7 /* Endpoint.swift */; };
 		1B91BF332B5325B0004570D7 /* APIRequestMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B91BF322B5325B0004570D7 /* APIRequestMethod.swift */; };
+		1B91BF362B5334D7004570D7 /* AlamofireAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B91BF352B5334D7004570D7 /* AlamofireAPIService.swift */; };
+		1B91BF3A2B533520004570D7 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B91BF392B533520004570D7 /* Token.swift */; };
+		1B91BF3D2B533570004570D7 /* TokenHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B91BF3C2B533570004570D7 /* TokenHandler.swift */; };
+		1B91BF3F2B5335CF004570D7 /* SensitiveDataPersistency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B91BF3E2B5335CF004570D7 /* SensitiveDataPersistency.swift */; };
+		1B91BF412B5335F5004570D7 /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B91BF402B5335F5004570D7 /* KeychainHelper.swift */; };
+		1B91BF452B533634004570D7 /* CacheTokenHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B91BF442B533634004570D7 /* CacheTokenHandler.swift */; };
+		1B91BF482B533D04004570D7 /* NetworkingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B91BF472B533D04004570D7 /* NetworkingError.swift */; };
+		1B91BF4A2B533D2A004570D7 /* ErrorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B91BF492B533D2A004570D7 /* ErrorResponse.swift */; };
+		1B91BF4C2B533D62004570D7 /* GeneralResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B91BF4B2B533D62004570D7 /* GeneralResponse.swift */; };
+		1B91BF512B533DEE004570D7 /* HTTPHeader+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B91BF502B533DEE004570D7 /* HTTPHeader+Extensions.swift */; };
+		1B91BF542B533E40004570D7 /* Data+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B91BF532B533E40004570D7 /* Data+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +41,17 @@
 		1B91BF2E2B53258C004570D7 /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
 		1B91BF302B532599004570D7 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		1B91BF322B5325B0004570D7 /* APIRequestMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequestMethod.swift; sourceTree = "<group>"; };
+		1B91BF352B5334D7004570D7 /* AlamofireAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireAPIService.swift; sourceTree = "<group>"; };
+		1B91BF392B533520004570D7 /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
+		1B91BF3C2B533570004570D7 /* TokenHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenHandler.swift; sourceTree = "<group>"; };
+		1B91BF3E2B5335CF004570D7 /* SensitiveDataPersistency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensitiveDataPersistency.swift; sourceTree = "<group>"; };
+		1B91BF402B5335F5004570D7 /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
+		1B91BF442B533634004570D7 /* CacheTokenHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheTokenHandler.swift; sourceTree = "<group>"; };
+		1B91BF472B533D04004570D7 /* NetworkingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingError.swift; sourceTree = "<group>"; };
+		1B91BF492B533D2A004570D7 /* ErrorResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorResponse.swift; sourceTree = "<group>"; };
+		1B91BF4B2B533D62004570D7 /* GeneralResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralResponse.swift; sourceTree = "<group>"; };
+		1B91BF502B533DEE004570D7 /* HTTPHeader+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HTTPHeader+Extensions.swift"; sourceTree = "<group>"; };
+		1B91BF532B533E40004570D7 /* Data+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +85,8 @@
 		1B91BF162B5322FA004570D7 /* GymTeam */ = {
 			isa = PBXGroup;
 			children = (
+				1B91BF372B533505004570D7 /* Domain */,
+				1B91BF342B5334CC004570D7 /* Infrastructure */,
 				1B91BF172B5322FA004570D7 /* GymTeamApp.swift */,
 				1B91BF2A2B532554004570D7 /* Data */,
 				1B91BF192B5322FA004570D7 /* ContentView.swift */,
@@ -84,20 +108,109 @@
 		1B91BF2A2B532554004570D7 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				1B91BF2B2B532559004570D7 /* Network */,
 			);
 			path = Data;
 			sourceTree = "<group>";
 		};
-		1B91BF2B2B532559004570D7 /* Network */ = {
+		1B91BF342B5334CC004570D7 /* Infrastructure */ = {
+			isa = PBXGroup;
+			children = (
+				1B91BF432B533622004570D7 /* Networking */,
+				1B91BF422B53361D004570D7 /* Security */,
+			);
+			path = Infrastructure;
+			sourceTree = "<group>";
+		};
+		1B91BF372B533505004570D7 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		1B91BF382B53350A004570D7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				1B91BF392B533520004570D7 /* Token.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		1B91BF3B2B533566004570D7 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				1B91BF3C2B533570004570D7 /* TokenHandler.swift */,
+				1B91BF3E2B5335CF004570D7 /* SensitiveDataPersistency.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		1B91BF422B53361D004570D7 /* Security */ = {
+			isa = PBXGroup;
+			children = (
+				1B91BF522B533E1A004570D7 /* Extensions */,
+				1B91BF382B53350A004570D7 /* Models */,
+				1B91BF3B2B533566004570D7 /* Services */,
+				1B91BF402B5335F5004570D7 /* KeychainHelper.swift */,
+				1B91BF442B533634004570D7 /* CacheTokenHandler.swift */,
+			);
+			path = Security;
+			sourceTree = "<group>";
+		};
+		1B91BF432B533622004570D7 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				1B91BF4F2B533DE4004570D7 /* Extensions */,
+				1B91BF4E2B533DC0004570D7 /* Data */,
+				1B91BF4D2B533D95004570D7 /* Service */,
+				1B91BF462B533CF1004570D7 /* Models */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		1B91BF462B533CF1004570D7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				1B91BF492B533D2A004570D7 /* ErrorResponse.swift */,
+				1B91BF4B2B533D62004570D7 /* GeneralResponse.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		1B91BF4D2B533D95004570D7 /* Service */ = {
 			isa = PBXGroup;
 			children = (
 				1B91BF2C2B532565004570D7 /* APIService.swift */,
+				1B91BF352B5334D7004570D7 /* AlamofireAPIService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		1B91BF4E2B533DC0004570D7 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				1B91BF472B533D04004570D7 /* NetworkingError.swift */,
 				1B91BF2E2B53258C004570D7 /* APIRequest.swift */,
 				1B91BF302B532599004570D7 /* Endpoint.swift */,
 				1B91BF322B5325B0004570D7 /* APIRequestMethod.swift */,
 			);
-			path = Network;
+			path = Data;
+			sourceTree = "<group>";
+		};
+		1B91BF4F2B533DE4004570D7 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				1B91BF502B533DEE004570D7 /* HTTPHeader+Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		1B91BF522B533E1A004570D7 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				1B91BF532B533E40004570D7 /* Data+Extensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -176,13 +289,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B91BF4A2B533D2A004570D7 /* ErrorResponse.swift in Sources */,
+				1B91BF3D2B533570004570D7 /* TokenHandler.swift in Sources */,
+				1B91BF3A2B533520004570D7 /* Token.swift in Sources */,
+				1B91BF542B533E40004570D7 /* Data+Extensions.swift in Sources */,
 				1B91BF1A2B5322FA004570D7 /* ContentView.swift in Sources */,
 				1B91BF1C2B5322FA004570D7 /* Item.swift in Sources */,
 				1B91BF2D2B532565004570D7 /* APIService.swift in Sources */,
 				1B91BF2F2B53258C004570D7 /* APIRequest.swift in Sources */,
+				1B91BF452B533634004570D7 /* CacheTokenHandler.swift in Sources */,
 				1B91BF312B532599004570D7 /* Endpoint.swift in Sources */,
+				1B91BF412B5335F5004570D7 /* KeychainHelper.swift in Sources */,
 				1B91BF182B5322FA004570D7 /* GymTeamApp.swift in Sources */,
+				1B91BF482B533D04004570D7 /* NetworkingError.swift in Sources */,
+				1B91BF512B533DEE004570D7 /* HTTPHeader+Extensions.swift in Sources */,
 				1B91BF332B5325B0004570D7 /* APIRequestMethod.swift in Sources */,
+				1B91BF4C2B533D62004570D7 /* GeneralResponse.swift in Sources */,
+				1B91BF362B5334D7004570D7 /* AlamofireAPIService.swift in Sources */,
+				1B91BF3F2B5335CF004570D7 /* SensitiveDataPersistency.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
