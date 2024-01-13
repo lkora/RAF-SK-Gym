@@ -1,5 +1,5 @@
-https://docs.spring.io/spring-boot/docs/current/reference/html/messaging.html
-Messaging protocol is used for inter service data flow
+https://docs.spring.io/spring-boot/docs/current/reference/html/messaging.html#messaging.kafka 
+Messaging protocol is used for inter-service data flow
 
 User service:
 3 tipa korisnika 
@@ -9,7 +9,9 @@ enum
 - client
 
 # --- Registration ---
-BaseProfileInfo: {
+BaseProfileInfo
+```json
+{
   "username": "string",
   "password": "string",
   "email": "string",
@@ -18,52 +20,83 @@ BaseProfileInfo: {
   "lastName": "string",  
 }
 
+```
+
+
 # Manager
 POST /api/register/manager
-Request: {
-    "baseInfo": BaseProfileInfo
+Request: 
+```json
+{
+    "baseInfo": BaseProfileInfo,
     "gymName": "string",
     "employmentDate": "date"
 }
-Response: {
+```
+Response: 
+```json
+{
     "message": "Activation email sent. Please check your email."
 }
+```
+
+
 
 # Client
 POST /api/register/client
-Request: {
+Request: 
+```json
+{
     "baseInfo": BaseProfileInfo
 }
-Response: {
+```
+Response: 
+```json
+{
     "message": "Activation email sent. Please check your email."
 }
+```
 
 # --- LOGIN ---
 POST /api/login
-Request: {
+Request:
+```json
+{
     "email": "string",
     "password": "string"
 }
-Response: {
+```
+Response: 
+```json
+{
     "jwt": "string"
 }
 
+```
 # --- ACTIONS ---
 # Ban user route
 POST /api/admin/ban/{username}
-Response: {
+Response: 
+```json
+{
     "message": "User has been banned."
 }
+```
 
 # Unban user route
 PUT /api/admin/unban/{username}
-Response: {
+Response:
+```json
+ {
     "message": "User has been unbanned."
 }
+```
 
 # Edit profile route
 PUT /api/profile/edit
-Request: {
+Request: 
+```json
+{
     "username": "string",
     "password": "string",
     "email": "string",
@@ -71,9 +104,13 @@ Request: {
     "firstName": "string",
     "lastName": "string"
 }
-Response: {
+```
+Response: 
+```json
+{
     "message": "Profile updated successfully."
 }
+```
 
 
 
@@ -85,6 +122,7 @@ NOTES
 Example table:
 
 # Base User Info Table
+```sql
 CREATE TABLE base_user_info (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(255) NOT NULL,
@@ -96,14 +134,18 @@ CREATE TABLE base_user_info (
     userType ENUM('admin', 'client', 'manager') NOT NULL
 );
 
+```
 # Admin Table
+```sql
 CREATE TABLE admin (
     id INT AUTO_INCREMENT PRIMARY KEY,
     base_user_info_id INT,
     FOREIGN KEY (base_user_info_id) REFERENCES base_user_info(id)
 );
+```
 
 # Client Table
+```sql
 CREATE TABLE client (
     id INT AUTO_INCREMENT PRIMARY KEY,
     base_user_info_id INT,
@@ -111,8 +153,10 @@ CREATE TABLE client (
     numOfScheduledTrainings INT,
     FOREIGN KEY (base_user_info_id) REFERENCES base_user_info(id)
 );
+```
 
 # Manager Table
+```sql
 CREATE TABLE manager (
     id INT AUTO_INCREMENT PRIMARY KEY,
     base_user_info_id INT,
@@ -120,3 +164,5 @@ CREATE TABLE manager (
     employmentDate DATE,
     FOREIGN KEY (base_user_info_id) REFERENCES base_user_info(id)
 );
+
+```
