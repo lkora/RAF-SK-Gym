@@ -1,0 +1,29 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: userservice
+  sql:
+    init:
+      mode: always
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+  mvc:
+    problemdetails:
+      enabled: true
+  threads:
+    virtual:
+      enabled: true
+eureka:
+  client:
+    service-url:
+      "defaultZone": ${EUREKA_URI:http://localhost:8761/eureka}
+    fetch-registry: false
+  instance:
+    prefer-ip-address: true
+#    PLEASE CHANGE THIS TO AN ENV-VAR...
+jwt:
+  secret: "TdwBV93UcHCHSOFpXvmb+xgaZxwEbeLJ/ts88yhlhMamHWGtjhMJAEHsFL/uxLFE7lPm7JTCICcemBFpFCXKrA=="

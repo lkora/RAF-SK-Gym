@@ -11,7 +11,7 @@ import org.testcontainers.utility.DockerImageName;
 public class TestUserServiceApplication {
 
 	/**
-	 * Instantiates and configures a MariaDB container.
+	 * Instantiates and configures a PostgreSQL container.
 	 *
 	 * @return The instantiated MariaDBContainer object.
 	 */
