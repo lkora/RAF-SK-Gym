@@ -12,7 +12,7 @@ import SwiftData
 struct GymTeamApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            SplashView()
         }
     }
 }
