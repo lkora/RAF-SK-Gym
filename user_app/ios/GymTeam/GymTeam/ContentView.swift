@@ -6,12 +6,18 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ContentView: View {
+    @State var loggedIn: Bool = false
+    
     var body: some View {
         NavigationStack {
-            
-
+            if !loggedIn {
+                LoginView()
+            } else {
+                
+            }
         }
     }
 
