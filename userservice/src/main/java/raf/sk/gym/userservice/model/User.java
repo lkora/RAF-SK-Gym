@@ -51,5 +51,11 @@ public class User {
 
     @Column(name = "is_banned")
     private Boolean isBanned;
+    @Column(name = "is_activated")
+    private Boolean isActivated;
 
+    @Override
+    public String toString() {
+        return "User{" + "id=" + id + ", username='" + username + '\'' + ", password='" + password + '\'' + ", email='" + email + '\'' + ", birthDate=" + birthDate + ", firstName='" + firstName + '\'' + ", lastName='" + lastName + '\'' + ", userType='" + userType + '\'' + ", isBanned=" + isBanned + ", isActivated=" + isActivated + '}';
+    }
 }

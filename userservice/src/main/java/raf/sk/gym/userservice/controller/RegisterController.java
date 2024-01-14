@@ -1,61 +1,109 @@
 package raf.sk.gym.userservice.controller;
 
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import raf.sk.gym.userservice.dto.kafka.ActivationEmail;
 import raf.sk.gym.userservice.dto.request.ClientRegistration;
 import raf.sk.gym.userservice.dto.request.ManagerRegistration;
+import raf.sk.gym.userservice.dto.request.UserRegistration;
 import raf.sk.gym.userservice.dto.response.GeneralResponse;
+import raf.sk.gym.userservice.model.ConfirmationToken;
+import raf.sk.gym.userservice.model.User;
+import raf.sk.gym.userservice.repository.ConfirmationTokenRepository;
 import raf.sk.gym.userservice.service.UserService;
+
+import java.time.LocalDate;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/auth/register")
 public class RegisterController {
 
-
-    private final KafkaTemplate<String, ActivationEmail> kafkaTemplate;
+    private static final String REGISTRATION_LINK = "http://localhost:8081/USERSERVICE/api/auth/register/confirm" +
+            "-account?token=";
     private static final String TOPIC = "activation-email";
-    private final UserService service;
+    private static final Logger LOG = LoggerFactory.getLogger(RegisterController.class);
+    private final KafkaTemplate<String, ActivationEmail> kafkaTemplate;
+    private final UserService userService;
 
-    public RegisterController(KafkaTemplate<String, ActivationEmail> kafkaTemplate, UserService service) {
+    private final ConfirmationTokenRepository tokenRepository;
+
+    public RegisterController(KafkaTemplate<String, ActivationEmail> kafkaTemplate, UserService userService,
+                              ConfirmationTokenRepository tokenRepository) {
         this.kafkaTemplate = kafkaTemplate;
-        this.service = service;
+        this.userService = userService;
+        this.tokenRepository = tokenRepository;
+    }
+
+    @GetMapping("confirm-account")
+    ResponseEntity<GeneralResponse> confirmAccount(@RequestParam("token") UUID confToken) {
+        LOG.info("Account confirmation request received");
+        var confirmationToken = tokenRepository.findByConfirmationToken(confToken);
+        return confirmationToken.map(token -> {
+                    if (!token.isValid()) {
+                        LOG.info("Confirmation attempted with expired token");
+                        return ResponseEntity.status(HttpStatus.GONE)
+                                .body(new GeneralResponse("Token expired."));
+                    }
+                    User user = token.getUser();
+                    user.setIsActivated(true);
+                    userService.saveUser(user);
+                    LOG.info("Account of user {} activated", user.getUsername());
+                    return ResponseEntity.status(HttpStatus.OK)
+                            .body(new GeneralResponse("Account confirmation successful."));
+                })
+                .orElseGet(() -> {
+                    LOG.info("Confirmation attempted with invalid token");
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                            .body(new GeneralResponse("Invalid confirmation token."));
+                });
     }
 
     @PostMapping("/manager")
     ResponseEntity<GeneralResponse> registerManager(@Valid @RequestBody ManagerRegistration dto) {
-        try {
-            service.createAndStoreManager(dto.username(), dto.password(), dto.email(), dto.birthDate(), dto.firstName(),
-                dto.lastName(), dto.gymName(), dto.dateOfEmployment());
-
-        } catch (DataIntegrityViolationException ignored) {
-            return new ResponseEntity<>(new GeneralResponse("Unable to create manager due to conflict"), HttpStatus.CONFLICT);
-        }
-        kafkaTemplate.send(TOPIC, new ActivationEmail(dto.email(), dto.firstName(), dto.lastName()));
-        return new ResponseEntity<>(new GeneralResponse("Activation email sent. Please check your email."),
-                HttpStatus.CREATED);
+        return registerUser(dto,
+                (username, password, email, birthDate, firstName, lastName) -> userService.createAndStoreManager(username, password, email, birthDate, firstName, lastName, dto.getGymName(), dto.getDateOfEmployment()));
     }
 
     @PostMapping("/client")
     ResponseEntity<GeneralResponse> registerClient(@Valid @RequestBody ClientRegistration dto) {
-        System.out.println("Client creation attempted");
-        try {
-            service.createAndStoreClient(dto.username(), dto.password(), dto.email(), dto.birthDate(), dto.firstName(),
-                dto.lastName());
-
-        } catch (DataIntegrityViolationException ignored) {
-            return new ResponseEntity<>(new GeneralResponse("Unable to create client due to conflict"), HttpStatus.CONFLICT);
-        }
-        kafkaTemplate.send(TOPIC, new ActivationEmail(dto.email(), dto.firstName(), dto.lastName()));
-        return new ResponseEntity<>(new GeneralResponse("Activation email sent. Please check your email."),
-                HttpStatus.CREATED);
+        return registerUser(dto, userService::createAndStoreClient);
     }
 
+    private <T extends UserRegistration> ResponseEntity<GeneralResponse> registerUser(T dto, UserCreator userCreator) {
+        try {
+            userCreator.createAndStoreUser(dto.getUsername(), dto.getPassword(), dto.getEmail(), dto.getBirthDate(),
+                    dto.getFirstName(), dto.getLastName());
+        } catch (DataIntegrityViolationException ignored) {
+            return new ResponseEntity<>(new GeneralResponse("Unable to create user due to conflict"),
+                    HttpStatus.CONFLICT);
+        }
+
+
+        return userService.findUserByUsername(dto.getUsername())
+                .map(user -> {
+                    var confirmationToken = new ConfirmationToken(user);
+                    LOG.debug("Confirmation token {} saved", confirmationToken);
+                    tokenRepository.save(confirmationToken);
+                    var confirmationLink = REGISTRATION_LINK + confirmationToken.getConfirmationToken();
+                    kafkaTemplate.send(TOPIC, new ActivationEmail(user.getEmail(), user.getFirstName(),
+                            user.getLastName(), confirmationLink));
+
+                    return new ResponseEntity<>(new GeneralResponse("Activation email sent. Please check your email."), HttpStatus.CREATED);
+                })
+                .orElseGet(() -> new ResponseEntity<>(new GeneralResponse("User registration failed due to an " +
+                        "unexpected error."), HttpStatus.INTERNAL_SERVER_ERROR));
+    }
+
+    @FunctionalInterface
+    private interface UserCreator {
+        void createAndStoreUser(String username, String password, String email, LocalDate birthDate, String firstName
+                , String lastName);
+    }
 }

@@ -1,5 +1,7 @@
 package raf.sk.gym.userservice.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,10 +19,10 @@ import java.util.Optional;
 @Service
 public class UserService {
 
+    private static final Logger LOG = LoggerFactory.getLogger(UserService.class);
     private final UserRepository userRepository;
     private final ClientRepository clientRepository;
     private final ManagerRepository managerRepository;
-
     private final PasswordEncoder encoder;
 
     public UserService(UserRepository userRepository, ClientRepository clientRepository,
@@ -33,37 +35,42 @@ public class UserService {
 
     public void createAndStoreClient(String username, String password, String email, LocalDate birthDate,
                                      String firstname, String lastname) {
-        User user = new User((Long) null, username, encoder.encode(password), email, birthDate, firstname, lastname,
-                "client", false);
+        LOG.info("Creating and storing client with username {}", username);
+        User user = createUser(username, password, email, birthDate, firstname, lastname, "client");
         Long memberCardNumber = generateCardNumber();
-        User savedUser = userRepository.save(user);
-        System.out.println(memberCardNumber);
-        System.out.println(savedUser);
-        System.out.println(clientRepository.existsById(savedUser.getId()));
-        Client client = new Client(savedUser.getId(), savedUser, memberCardNumber, 0L);
-        System.out.println(clientRepository.save(client));
-        clientRepository.findByClientId(savedUser.getId())
-                .ifPresent(System.out::println);
+        Client client = new Client(user.getId(), user, memberCardNumber, 0L);
+        clientRepository.save(client);
+        LOG.info("Client with username {} created and stored successfully", username);
     }
 
     private Long generateCardNumber() {
         return userRepository.count() + 1;
     }
 
-    public void createAndStoreManager(String userName, String password, String email, LocalDate birthDate,
+    public void createAndStoreManager(String username, String password, String email, LocalDate birthDate,
                                       String firstName, String lastName, String gymnasiumName,
                                       LocalDate dateOfEmployment) {
-        User user = new User(null, userName, encoder.encode(password), email, birthDate, firstName, lastName,
-                "manager", false);
-        User savedUser = userRepository.save(user);
-        Manager manager = new Manager(savedUser.getId(), savedUser, gymnasiumName, dateOfEmployment);
+        LOG.info("Creating and storing manager with username: {}", username);
+        User user = createUser(username, password, email, birthDate, firstName, lastName, "manager");
+        Manager manager = new Manager(user.getId(), user, gymnasiumName, dateOfEmployment);
         managerRepository.save(manager);
+        LOG.info("Manager with username {} created and stored successfully", username);
+    }
+
+    private User createUser(String username, String password, String email, LocalDate birthDate, String firstName,
+                            String lastName, String userType) {
+        LOG.debug("Creating user with username {}", username);
+        User user = new User(null, username, encoder.encode(password), email, birthDate, firstName, lastName, userType, false, false);
+        User savedUser = userRepository.save(user);
+        LOG.debug("Created and saved user with username {} and id {}", username, savedUser.getId());
+        return savedUser;
     }
 
     public void ban(String username) {
         userRepository.findByUsername(username)
                 .ifPresentOrElse(user -> {
-                    if (user.getUserType().equalsIgnoreCase("admin")) {
+                    if (user.getUserType()
+                            .equalsIgnoreCase("admin")) {
                         throw new UserIsAdminException("Cannot ban another administrator");
                     }
                     user.setIsBanned(true);
@@ -83,7 +90,8 @@ public class UserService {
                 });
     }
 
-    public void editProfile(String username, String password, LocalDate dateOfBirth, String firstName, String lastName) {
+    public void editProfile(String username, String password, LocalDate dateOfBirth, String firstName,
+                            String lastName) {
         userRepository.findByUsername(username)
                 .ifPresentOrElse(user -> {
                     user.setUsername(username);
@@ -101,4 +109,7 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
+    public void saveUser(User user) {
+        this.userRepository.save(user);
+    }
 }

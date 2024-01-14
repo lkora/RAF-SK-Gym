@@ -47,11 +47,11 @@ public class GymUserDetails implements UserDetails {
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return user.getIsActivated();
     }
 
     @Override
     public boolean isEnabled() {
-        return !user.getIsBanned();
+        return !user.getIsBanned() && user.getIsActivated();
     }
 }

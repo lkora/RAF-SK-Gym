@@ -1,16 +1,10 @@
 package raf.sk.gym.userservice.dto.request;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-
 import java.time.LocalDate;
 
-public record ClientRegistration(
-        @NotBlank String username,
-        @NotBlank String password,
-        @Email String email,
-        @NotNull LocalDate birthDate,
-        @NotBlank String firstName,
-        @NotBlank String lastName) {
+public final class ClientRegistration extends UserRegistration {
+
+    public ClientRegistration(String username, String password, String email, LocalDate birthDate, String firstName, String lastName) {
+        super(username, password, email, birthDate, firstName, lastName);
+    }
 }

@@ -12,7 +12,7 @@ spring:
     bootstrap-servers: localhost:9092
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
   mvc:
     problemdetails:
       enabled: true
@@ -29,3 +29,8 @@ eureka:
 #    PLEASE CHANGE THIS TO AN ENV-VAR...
 jwt:
   secret: "TdwBV93UcHCHSOFpXvmb+xgaZxwEbeLJ/ts88yhlhMamHWGtjhMJAEHsFL/uxLFE7lPm7JTCICcemBFpFCXKrA=="
+logging:
+  level:
+    org.apache.kafka: WARN
+    kafka: WARN
+    kafka.admin: WARN
