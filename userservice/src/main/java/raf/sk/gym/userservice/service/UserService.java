@@ -1,7 +1,6 @@
 package raf.sk.gym.userservice.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,9 +16,8 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class UserService {
-
-    private static final Logger LOG = LoggerFactory.getLogger(UserService.class);
     private final UserRepository userRepository;
     private final ClientRepository clientRepository;
     private final ManagerRepository managerRepository;
@@ -35,12 +33,12 @@ public class UserService {
 
     public void createAndStoreClient(String username, String password, String email, LocalDate birthDate,
                                      String firstname, String lastname) {
-        LOG.info("Creating and storing client with username {}", username);
+        log.info("Creating and storing client with username {}", username);
         User user = createUser(username, password, email, birthDate, firstname, lastname, "client");
         Long memberCardNumber = generateCardNumber();
         Client client = new Client(user.getId(), user, memberCardNumber, 0L);
         clientRepository.save(client);
-        LOG.info("Client with username {} created and stored successfully", username);
+        log.info("Client with username {} created and stored successfully", username);
     }
 
     private Long generateCardNumber() {
@@ -50,19 +48,19 @@ public class UserService {
     public void createAndStoreManager(String username, String password, String email, LocalDate birthDate,
                                       String firstName, String lastName, String gymnasiumName,
                                       LocalDate dateOfEmployment) {
-        LOG.info("Creating and storing manager with username: {}", username);
+        log.info("Creating and storing manager with username: {}", username);
         User user = createUser(username, password, email, birthDate, firstName, lastName, "manager");
         Manager manager = new Manager(user.getId(), user, gymnasiumName, dateOfEmployment);
         managerRepository.save(manager);
-        LOG.info("Manager with username {} created and stored successfully", username);
+        log.info("Manager with username {} created and stored successfully", username);
     }
 
     private User createUser(String username, String password, String email, LocalDate birthDate, String firstName,
                             String lastName, String userType) {
-        LOG.debug("Creating user with username {}", username);
+        log.debug("Creating user with username {}", username);
         User user = new User(null, username, encoder.encode(password), email, birthDate, firstName, lastName, userType, false, false);
         User savedUser = userRepository.save(user);
-        LOG.debug("Created and saved user with username {} and id {}", username, savedUser.getId());
+        log.debug("Created and saved user with username {} and id {}", username, savedUser.getId());
         return savedUser;
     }
 
@@ -108,6 +106,13 @@ public class UserService {
     public Optional<User> findUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }
+    public Optional<Manager> findManager(Long id) {
+        return managerRepository.findById(id);
+    }
+    public Optional<Client> findClient(Long id) {
+        return clientRepository.findByClientId(id);
+    }
+
 
     public void saveUser(User user) {
         this.userRepository.save(user);

@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface ClientRepository extends ListCrudRepository<Client, Long> {
 
     Optional<Client> findByClientId(Long id);
+
 }

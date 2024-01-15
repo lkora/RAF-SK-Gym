@@ -1,8 +1,8 @@
 -- noinspection SqlNoDataSourceInspectionForFile
-DROP TABLE "user" CASCADE;
-DROP TABLE "client";
-DROP TABLE "manager";
-DROP TABLE "confirmation_token";
+DROP TABLE IF EXISTS "user" CASCADE;
+DROP TABLE IF EXISTS "client";
+DROP TABLE IF EXISTS "manager";
+DROP TABLE IF EXISTS "confirmation_token";
 
 CREATE TABLE IF NOT EXISTS "user"
 (

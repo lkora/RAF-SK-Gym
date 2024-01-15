@@ -7,21 +7,22 @@ import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.util.Base64;
-import java.util.Collections;
 import java.util.Date;
 
 @Component
 public class JwtTokenProvider {
-    private final long jwtExpirationInMillis = 60 * 60 * 1000;
+    private final long jwtExpirationInMillis = 60 * 60 * 1000 * 60;
     @Value("${jwt.secret}")
     private String jwtSecret;
+
+    private final GymUserDetailsService userDetailsService;
+
+    public JwtTokenProvider(GymUserDetailsService userDetailsService) {this.userDetailsService = userDetailsService;}
 
     public String generateToken(Authentication authentication) {
 
@@ -37,17 +38,25 @@ public class JwtTokenProvider {
                 .issuer("gym.raf.edu.rs")
                 .issuedAt(new Date())
                 .expiration(expiryDate)
-                .signWith(getKey(), Jwts.SIG.HS512)
+                .signWith(getKey())
                 .compact();
     }
 
     public String getUsernameFromToken(String token) {
+        token = getJwtFromHeader(token);
         Claims claims = Jwts.parser()
                 .verifyWith(getKey())
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
         return claims.getSubject();
+    }
+
+    private String getJwtFromHeader(String header) {
+        if (header.startsWith("Bearer")) {
+            return header.substring(7);
+        }
+        return header;
     }
 
     /**
@@ -74,9 +83,7 @@ public class JwtTokenProvider {
                 .parseSignedClaims(token)
                 .getPayload();
         String username = claims.getSubject();
-        String role = claims.get("role", String.class);
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role);
-        UserDetails userDetails = new User(username, "", Collections.singletonList(authority));
+        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
         return new UsernamePasswordAuthenticationToken(userDetails, token, userDetails.getAuthorities());
     }
 
