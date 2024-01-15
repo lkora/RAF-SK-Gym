@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct User {
+struct User: Identifiable {
+    var id = UUID()
     var userType: UserType
     var username: String
     var password: String
@@ -15,6 +16,7 @@ struct User {
     var dob: Date
     var firstName: String
     var lastName: String
+    var isBanned: Bool = false
     var memberCardNumber: String?
     var scheduledTrainings: Int?
     var gymName: String?
