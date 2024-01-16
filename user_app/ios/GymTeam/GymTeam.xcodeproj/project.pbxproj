@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B87A7FD2B570FB40063CB87 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B87A7FC2B570FB40063CB87 /* LoginViewModel.swift */; };
+		1B87A7FF2B5711D40063CB87 /* AuthorizedAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B87A7FE2B5711D40063CB87 /* AuthorizedAPIService.swift */; };
+		1B87A8012B571B5A0063CB87 /* GymAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B87A8002B571B5A0063CB87 /* GymAPIService.swift */; };
+		1B87A8062B571C290063CB87 /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B87A8052B571C290063CB87 /* LoginRequest.swift */; };
+		1B87A8092B571C740063CB87 /* AuthEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B87A8082B571C740063CB87 /* AuthEndpoint.swift */; };
+		1B87A80D2B571E1D0063CB87 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B87A80C2B571E1D0063CB87 /* LoginResponse.swift */; };
+		1B87A80F2B5724650063CB87 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B87A80E2B5724650063CB87 /* AppDelegate.swift */; };
+		1B87A8122B57288B0063CB87 /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B87A8112B57288B0063CB87 /* RegistrationViewModel.swift */; };
+		1B87A8142B572C440063CB87 /* RegisterClientRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B87A8132B572C440063CB87 /* RegisterClientRequest.swift */; };
+		1B87A8162B572CC60063CB87 /* RegisterManagerRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B87A8152B572CC60063CB87 /* RegisterManagerRequest.swift */; };
 		1B91BF182B5322FA004570D7 /* GymTeamApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B91BF172B5322FA004570D7 /* GymTeamApp.swift */; };
 		1B91BF1A2B5322FA004570D7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B91BF192B5322FA004570D7 /* ContentView.swift */; };
 		1B91BF1C2B5322FA004570D7 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B91BF1B2B5322FA004570D7 /* Globals.swift */; };
@@ -48,6 +58,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1B87A7FC2B570FB40063CB87 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		1B87A7FE2B5711D40063CB87 /* AuthorizedAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizedAPIService.swift; sourceTree = "<group>"; };
+		1B87A8002B571B5A0063CB87 /* GymAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GymAPIService.swift; sourceTree = "<group>"; };
+		1B87A8052B571C290063CB87 /* LoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequest.swift; sourceTree = "<group>"; };
+		1B87A8082B571C740063CB87 /* AuthEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthEndpoint.swift; sourceTree = "<group>"; };
+		1B87A80C2B571E1D0063CB87 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
+		1B87A80E2B5724650063CB87 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		1B87A8112B57288B0063CB87 /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewModel.swift; sourceTree = "<group>"; };
+		1B87A8132B572C440063CB87 /* RegisterClientRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterClientRequest.swift; sourceTree = "<group>"; };
+		1B87A8152B572CC60063CB87 /* RegisterManagerRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterManagerRequest.swift; sourceTree = "<group>"; };
 		1B91BF142B5322FA004570D7 /* GymTeam.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GymTeam.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B91BF172B5322FA004570D7 /* GymTeamApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GymTeamApp.swift; sourceTree = "<group>"; };
 		1B91BF192B5322FA004570D7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -100,6 +120,57 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1B87A7FB2B570FA80063CB87 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				1B91BF5C2B534B65004570D7 /* LoginView.swift */,
+				1B87A7FC2B570FB40063CB87 /* LoginViewModel.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		1B87A8022B571B960063CB87 /* Requests */ = {
+			isa = PBXGroup;
+			children = (
+				1B87A8052B571C290063CB87 /* LoginRequest.swift */,
+				1B87A8132B572C440063CB87 /* RegisterClientRequest.swift */,
+				1B87A8152B572CC60063CB87 /* RegisterManagerRequest.swift */,
+			);
+			path = Requests;
+			sourceTree = "<group>";
+		};
+		1B87A8032B571B9A0063CB87 /* Responses */ = {
+			isa = PBXGroup;
+			children = (
+				1B87A80C2B571E1D0063CB87 /* LoginResponse.swift */,
+			);
+			path = Responses;
+			sourceTree = "<group>";
+		};
+		1B87A8042B571BBF0063CB87 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Objects;
+			sourceTree = "<group>";
+		};
+		1B87A8072B571C5C0063CB87 /* Endpoints */ = {
+			isa = PBXGroup;
+			children = (
+				1B87A8082B571C740063CB87 /* AuthEndpoint.swift */,
+			);
+			path = Endpoints;
+			sourceTree = "<group>";
+		};
+		1B87A8102B57287F0063CB87 /* Registration */ = {
+			isa = PBXGroup;
+			children = (
+				1B9A7D8C2B546F0900698B92 /* RegisterView.swift */,
+				1B87A8112B57288B0063CB87 /* RegistrationViewModel.swift */,
+			);
+			path = Registration;
+			sourceTree = "<group>";
+		};
 		1B91BF0B2B5322FA004570D7 = {
 			isa = PBXGroup;
 			children = (
@@ -128,6 +199,7 @@
 				1B91BF1B2B5322FA004570D7 /* Globals.swift */,
 				1B91BF1D2B5322FB004570D7 /* Assets.xcassets */,
 				1B91BF1F2B5322FB004570D7 /* Preview Content */,
+				1B87A80E2B5724650063CB87 /* AppDelegate.swift */,
 			);
 			path = GymTeam;
 			sourceTree = "<group>";
@@ -202,6 +274,10 @@
 		1B91BF462B533CF1004570D7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				1B87A8072B571C5C0063CB87 /* Endpoints */,
+				1B87A8042B571BBF0063CB87 /* Objects */,
+				1B87A8032B571B9A0063CB87 /* Responses */,
+				1B87A8022B571B960063CB87 /* Requests */,
 				1B91BF492B533D2A004570D7 /* ErrorResponse.swift */,
 				1B91BF4B2B533D62004570D7 /* GeneralResponse.swift */,
 			);
@@ -213,6 +289,8 @@
 			children = (
 				1B91BF2C2B532565004570D7 /* APIService.swift */,
 				1B91BF352B5334D7004570D7 /* AlamofireAPIService.swift */,
+				1B87A7FE2B5711D40063CB87 /* AuthorizedAPIService.swift */,
+				1B87A8002B571B5A0063CB87 /* GymAPIService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -256,10 +334,10 @@
 		1B91BF582B534475004570D7 /* Initial */ = {
 			isa = PBXGroup;
 			children = (
+				1B87A8102B57287F0063CB87 /* Registration */,
+				1B87A7FB2B570FA80063CB87 /* Login */,
 				1B91BF552B534248004570D7 /* SplashView.swift */,
-				1B91BF5C2B534B65004570D7 /* LoginView.swift */,
 				1B91BF5E2B534BD5004570D7 /* ServerLocationSetupView.swift */,
-				1B9A7D8C2B546F0900698B92 /* RegisterView.swift */,
 				1B9A7D972B5472C900698B92 /* SetBaseServerUrlView.swift */,
 			);
 			path = Initial;
@@ -406,19 +484,26 @@
 			files = (
 				1B9A7D8B2B546AA500698B92 /* ServerSettings.swift in Sources */,
 				1B91BF4A2B533D2A004570D7 /* ErrorResponse.swift in Sources */,
+				1B87A80D2B571E1D0063CB87 /* LoginResponse.swift in Sources */,
 				1B9A7D982B5472C900698B92 /* SetBaseServerUrlView.swift in Sources */,
 				1B91BF3D2B533570004570D7 /* TokenHandler.swift in Sources */,
 				1B9A7D902B54712100698B92 /* User.swift in Sources */,
 				1B91BF5F2B534BD5004570D7 /* ServerLocationSetupView.swift in Sources */,
+				1B87A7FF2B5711D40063CB87 /* AuthorizedAPIService.swift in Sources */,
 				1B91BF3A2B533520004570D7 /* Token.swift in Sources */,
+				1B87A8092B571C740063CB87 /* AuthEndpoint.swift in Sources */,
 				1B91BF542B533E40004570D7 /* Data+Extensions.swift in Sources */,
+				1B87A7FD2B570FB40063CB87 /* LoginViewModel.swift in Sources */,
 				1B91BF1A2B5322FA004570D7 /* ContentView.swift in Sources */,
 				1B91BF1C2B5322FA004570D7 /* Globals.swift in Sources */,
 				1B91BF2D2B532565004570D7 /* APIService.swift in Sources */,
 				1B91BF2F2B53258C004570D7 /* APIRequest.swift in Sources */,
 				1B9A7D9D2B54840000698B92 /* ProfileView.swift in Sources */,
 				1B9A7DA12B549A1A00698B92 /* MainView.swift in Sources */,
+				1B87A80F2B5724650063CB87 /* AppDelegate.swift in Sources */,
+				1B87A8012B571B5A0063CB87 /* GymAPIService.swift in Sources */,
 				1B9A7D882B5469E400698B92 /* UserDefaultsPersistable.swift in Sources */,
+				1B87A8162B572CC60063CB87 /* RegisterManagerRequest.swift in Sources */,
 				1B91BF452B533634004570D7 /* CacheTokenHandler.swift in Sources */,
 				1B9A7DAF2B54B2F700698B92 /* GymManagerView.swift in Sources */,
 				1B91BF312B532599004570D7 /* Endpoint.swift in Sources */,
@@ -428,10 +513,12 @@
 				1B9A7D9F2B5492C600698B92 /* AppointmentView.swift in Sources */,
 				1B9A7DAA2B54AE7900698B92 /* UsersListView.swift in Sources */,
 				1B91BF482B533D04004570D7 /* NetworkingError.swift in Sources */,
+				1B87A8062B571C290063CB87 /* LoginRequest.swift in Sources */,
 				1B91BF562B534248004570D7 /* SplashView.swift in Sources */,
 				1B9A7DAC2B54B02D00698B92 /* Appointment.swift in Sources */,
 				1B91BF512B533DEE004570D7 /* HTTPHeader+Extensions.swift in Sources */,
 				1B91BF332B5325B0004570D7 /* APIRequestMethod.swift in Sources */,
+				1B87A8142B572C440063CB87 /* RegisterClientRequest.swift in Sources */,
 				1B91BF4C2B533D62004570D7 /* GeneralResponse.swift in Sources */,
 				1B91BF362B5334D7004570D7 /* AlamofireAPIService.swift in Sources */,
 				1B9A7D9A2B54784300698B92 /* UserType.swift in Sources */,
@@ -439,6 +526,7 @@
 				1B91BF5D2B534B65004570D7 /* LoginView.swift in Sources */,
 				1B9A7DB12B54B8B100698B92 /* AddTrainingView.swift in Sources */,
 				1B91BF3F2B5335CF004570D7 /* SensitiveDataPersistency.swift in Sources */,
+				1B87A8122B57288B0063CB87 /* RegistrationViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

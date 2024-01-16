@@ -10,6 +10,8 @@ import SwiftData
 
 @main
 struct GymTeamApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
     var body: some Scene {
         WindowGroup {
             SplashView()

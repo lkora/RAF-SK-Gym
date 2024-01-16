@@ -9,13 +9,7 @@ import SwiftUI
 
 struct LoginView: View {
     
-    @State private var username: String = ""
-    @State private var password: String = ""
-    @State private var serverURL: String = "" {
-        didSet {
-            ServerSettings.updateBaseServerUrl(newState: serverURL)
-        }
-    }
+    @ObservedObject private var loginViewModel: LoginViewModel = LoginViewModel()
 
     var body: some View {
         NavigationStack {
@@ -25,31 +19,31 @@ struct LoginView: View {
 
                 HStack {
                     Text("Server address:")
-                    Text(serverURL)
+                    Text(loginViewModel.serverURL)
                         .padding()
                     Spacer()
                 }
-                NavigationLink(destination: SetBaseServerUrlView(serverUrl: $serverURL),
+                NavigationLink(destination: SetBaseServerUrlView(serverUrl: $loginViewModel.serverURL),
                                label: { Text("Change") })
 
                 
                 Spacer()
-                TextField("Username", text: $username)
+                TextField("Username", text: $loginViewModel.username)
                     .padding()
                     .border(Color.gray, width: 0.5)
                 
-                SecureField("Password", text: $password)
+                SecureField("Password", text: $loginViewModel.password)
                     .padding()
                     .border(Color.gray, width: 0.5)
 
                 HStack(spacing: 50) {
                     Button(action: {
-                        // TODO: Add login request, navigate to main app
+                        loginViewModel.login()
                     }) {
                         Text("Login")
                     }
                     
-                    NavigationLink(destination: RegisterView(),
+                    NavigationLink(destination: RegisterView(registrationViewModel: RegistrationViewModel(apiService: loginViewModel.apiService)),
                                    label: { Text("Register") })
                 }
                 .padding()
@@ -64,7 +58,7 @@ struct LoginView: View {
         }
         
         .onAppear(perform: {
-            serverURL = ServerSettings.baseServerUrl ?? serverURL
+            loginViewModel.serverURL = ServerSettings.baseServerUrl ?? loginViewModel.serverURL
         })
     }
 }
