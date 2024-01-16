@@ -10,9 +10,9 @@ import java.time.LocalDateTime;
 @Table(name = "mailer_log")
 @Getter
 public class EmailLog {
-
+    
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
@@ -33,5 +33,11 @@ public class EmailLog {
         this.topic = topic;
         this.receiver = receiver;
         this.message = message;
+    }
+    public EmailLog() {}
+
+    @Override
+    public String toString() {
+        return "EmailLog{" + "id=" + id + ", timestamp=" + timestamp + ", topic='" + topic + '\'' + ", receiver='" + receiver + '\'' + ", message='" + message + '\'' + '}';
     }
 }

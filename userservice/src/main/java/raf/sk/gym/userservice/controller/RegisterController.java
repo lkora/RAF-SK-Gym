@@ -91,7 +91,7 @@ public class RegisterController {
                     log.debug("Confirmation token {} saved", confirmationToken);
                     tokenRepository.save(confirmationToken);
                     var confirmationLink = REGISTRATION_LINK + confirmationToken.getConfirmationToken();
-                    kafkaTemplate.send(TOPIC, new ActivationEmail(user.getEmail(), user.getFirstName(),
+                    kafkaTemplate.send(TOPIC, new ActivationEmail(user.getEmail(), user.getUsername(), user.getFirstName(),
                             user.getLastName(), confirmationLink));
 
                     return new ResponseEntity<>(new GeneralResponse("Activation email sent. Please check your email."), HttpStatus.CREATED);

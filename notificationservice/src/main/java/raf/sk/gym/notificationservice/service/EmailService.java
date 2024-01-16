@@ -1,6 +1,5 @@
 package raf.sk.gym.notificationservice.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
@@ -8,8 +7,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class EmailService {
 
-    @Autowired
-    public JavaMailSender mailSender;
+    public final JavaMailSender mailSender;
+
+    public EmailService(JavaMailSender mailSender) {this.mailSender = mailSender;}
 
     public void sendSimpleMessage(String to, String subject, String text) {
 
@@ -17,6 +17,7 @@ public class EmailService {
         message.setTo(to);
         message.setSubject(subject);
         message.setText(text);
-        mailSender.send(message);
+//        mailSender.send(message);
+        System.out.println(message);
     }
 }
