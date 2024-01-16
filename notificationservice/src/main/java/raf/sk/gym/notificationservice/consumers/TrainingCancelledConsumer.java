@@ -9,14 +9,18 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import raf.sk.gym.notificationservice.consumers.objects.TrainingCancelledDTO;
 import raf.sk.gym.notificationservice.consumers.objects.models.ReceiverDTO;
+import raf.sk.gym.notificationservice.logging.EmailLog;
+import raf.sk.gym.notificationservice.repository.MailLogRepository;
 
 @Service
 public class TrainingCancelledConsumer {
 
     @Autowired
     private JavaMailSender mailSender;
+    private MailLogRepository mailLogRepository;
+    private final String topicName = "training-cancelled";
 
-    @KafkaListener(topics="training-cancelled")
+    @KafkaListener(topics=topicName)
     public void consumeTrainingCancelled(String message) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         TrainingCancelledDTO trainingCancelledDto = mapper.readValue(message, TrainingCancelledDTO.class);
@@ -31,6 +35,10 @@ public class TrainingCancelledConsumer {
 
             // Send the email
             mailSender.send(mailMessage);
+
+            // Log the email
+            mailLogRepository.save(new EmailLog(topicName, receiver.getEmail(), mailMessage.getSubject() + " --- " + mailMessage.getText()));
+
         }
     }
 }

@@ -20,3 +20,8 @@ eureka:
     fetch-registry: false
   instance:
     prefer-ip-address: true
+logging:
+  level:
+    org.apache.kafka: WARN
+    kafka: WARN
+    kafka.admin: WARN

@@ -8,14 +8,19 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import raf.sk.gym.notificationservice.consumers.objects.TrainingReminderDTO;
+import raf.sk.gym.notificationservice.logging.EmailLog;
+import raf.sk.gym.notificationservice.repository.MailLogRepository;
 
 @Service
 public class TrainingReminderConsumer {
 
     @Autowired
     private JavaMailSender mailSender;
+    private MailLogRepository mailLogRepository;
+    private final String topicName = "training-reminder";
 
-    @KafkaListener(topics="training-reminder")
+
+    @KafkaListener(topics=topicName)
     public void consumeTrainingReminder(String message) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         TrainingReminderDTO trainingReminderDto = mapper.readValue(message, TrainingReminderDTO.class);
@@ -29,5 +34,9 @@ public class TrainingReminderConsumer {
 
         // Send the email
         mailSender.send(mailMessage);
+
+        // Log the email
+        mailLogRepository.save(new EmailLog(topicName, trainingReminderDto.getReceiver().getEmail(), mailMessage.getSubject() + " --- " + mailMessage.getText()));
+
     }
 }
