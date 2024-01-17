@@ -13,6 +13,7 @@ import raf.sk.gym.userservice.repository.ManagerRepository;
 import raf.sk.gym.userservice.repository.UserRepository;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -116,5 +117,9 @@ public class UserService {
 
     public void saveUser(User user) {
         this.userRepository.save(user);
+    }
+
+    public List<User> findAllUsers() {
+        return userRepository.findAll();
     }
 }

@@ -39,6 +39,18 @@ public class ProfileController {
                 .body(new GeneralResponse("Profile edited successfully."));
     }
 
+    @GetMapping("/simple")
+    public ResponseEntity<?> getSimpleProfile(@RequestHeader("Authorization") String token) {
+        String username = tokenProvider.getUsernameFromToken(token);
+        var usr = service.findUserByUsername(username);
+        if (usr.isEmpty())
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new GeneralResponse("User not found"));
+        var user = usr.get();
+        record SimpleUser(String email, String username, String firstName, String lastName) {}
+        var simpleUser = new SimpleUser(user.getEmail(), user.getUsername(), user.getFirstName(), user.getLastName());
+        return ResponseEntity.status(HttpStatus.OK).body(simpleUser);
+    }
+
     @GetMapping("/")
     public ResponseEntity<?> getProfile(@RequestHeader("Authorization") String token) {
         String username = tokenProvider.getUsernameFromToken(token);

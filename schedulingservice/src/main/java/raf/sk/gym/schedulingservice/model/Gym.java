@@ -1,6 +1,7 @@
 package raf.sk.gym.schedulingservice.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,7 +18,7 @@ public class Gym {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @jakarta.validation.constraints.Size(max = 255)
+    @Size(max = 255)
     @Column(name = "name")
     private String name;
 
@@ -28,12 +29,9 @@ public class Gym {
     private Integer numberOfTrainers;
 
     @OneToMany(mappedBy = "gym")
-    private Set<Appointment> appointments = new LinkedHashSet<>();
-
-    @OneToOne(mappedBy = "gym")
-    private LoyalCustomerOffer loyalCustomerOffers;
+    private Set<GymTraining> gymTrainings = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "gym")
-    private Set<TrainingType> trainingTypes = new LinkedHashSet<>();
+    private Set<LoyalCustomerOffer> loyalCustomerOffers = new LinkedHashSet<>();
 
 }

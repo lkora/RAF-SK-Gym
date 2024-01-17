@@ -2,6 +2,7 @@ package raf.sk.gym.userservice.controller;
 
 
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,7 +19,9 @@ import raf.sk.gym.userservice.dto.request.LoginRequest;
 import raf.sk.gym.userservice.dto.response.JwtResponse;
 import raf.sk.gym.userservice.dto.response.JwtRoleResponse;
 import raf.sk.gym.userservice.security.JwtTokenProvider;
+import raf.sk.gym.userservice.service.UserService;
 
+@Slf4j
 @RestController
 @RequestMapping("/auth/")
 public class LoginController {
@@ -29,10 +32,12 @@ public class LoginController {
 
     private final JwtTokenProvider jwtTokenProvider;
 
+    private final UserService userService;
 
-    public LoginController(AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider) {
+    public LoginController(AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider, UserService userService) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenProvider = jwtTokenProvider;
+        this.userService = userService;
     }
 
     @PostMapping("/login")
@@ -48,6 +53,7 @@ public class LoginController {
 
     @PostMapping("/valid")
     public ResponseEntity<JwtRoleResponse> jwtValidationCheck(@RequestBody JwtRequest request) {
+        log.info("Go {}",request);
         String jwt = request.jwt();
         if (jwt != null && jwt.startsWith("Bearer ")) {
             String token = jwt.substring(7)
@@ -60,8 +66,6 @@ public class LoginController {
                 return ResponseEntity.status(HttpStatus.OK)
                     .body(new JwtRoleResponse(true, role));
             } catch (RuntimeException e) {
-                System.out.println("Unauthorized");
-                System.out.println(e.getMessage());
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body(new JwtRoleResponse(false, ""));
             }
@@ -69,5 +73,22 @@ public class LoginController {
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new JwtRoleResponse(false, ""));
+    }
+    @PostMapping("/valid/manager")
+    public ResponseEntity<?> verifyManager(@RequestBody JwtRequest request) {
+        String username = jwtTokenProvider.getUsernameFromToken(request.jwt());
+        var userOptional = userService.findUserByUsername(username);
+        if (userOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        var user = userOptional.get();
+        if (user.getUserType().equalsIgnoreCase("manager")) {
+            var manager = userService.findManager(user.getId());
+            record ManagerResponse(Boolean isManager, String gymName) {}
+            return manager.map(m -> ResponseEntity.ok(new ManagerResponse(true, m.getGymName())))
+                    .orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                            .build());
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 }

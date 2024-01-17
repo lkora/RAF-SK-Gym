@@ -1,8 +1,11 @@
 package raf.sk.gym.schedulingservice.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalTime;
 
@@ -17,17 +20,11 @@ public class Appointment {
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "training_type_id")
-    private TrainingType trainingType;
+    @OnDelete(action = OnDeleteAction.RESTRICT)
+    @JoinColumn(name = "gym_training_id")
+    private GymTraining gymTraining;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "gym_id")
-    private Gym gym;
-
-    @Column(name = "user_id")
-    private Integer userId;
-
-    @jakarta.validation.constraints.Size(max = 9)
+    @Size(max = 9)
     @Column(name = "day_of_week", length = 9)
     private String dayOfWeek;
 
@@ -36,5 +33,14 @@ public class Appointment {
 
     @Column(name = "participants")
     private Integer participants;
+
+    @Column(name = "registered_users")
+    private Integer registeredUsers;
+
+    @Column(name = "is_cancelled")
+    private Boolean isCancelled;
+
+    @Column(name = "cancelled_by")
+    private Integer cancelledBy;
 
 }

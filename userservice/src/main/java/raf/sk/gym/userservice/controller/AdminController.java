@@ -7,8 +7,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import raf.sk.gym.userservice.dto.kafka.UserDto;
 import raf.sk.gym.userservice.dto.response.GeneralResponse;
+import raf.sk.gym.userservice.model.User;
 import raf.sk.gym.userservice.service.UserService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/admin")
@@ -33,5 +37,15 @@ public class AdminController {
         service.unban(username);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new GeneralResponse("Unbanned user: " + username + " successfully"));
+    }
+
+    @GetMapping("/users")
+    @PreAuthorize("hasAuthority('admin')")
+    public ResponseEntity<List<UserDto>> getUsers() {
+        List<User> users = service.findAllUsers();
+        List<UserDto> userDtos = users.stream()
+                .map(user -> new UserDto(user.getEmail(), user.getUsername(), user.getFirstName(), user.getLastName()))
+                .toList();
+        return ResponseEntity.ok(userDtos);
     }
 }
