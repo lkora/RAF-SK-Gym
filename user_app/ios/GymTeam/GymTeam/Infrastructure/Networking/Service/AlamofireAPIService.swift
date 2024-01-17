@@ -24,7 +24,7 @@ final class AlamofireAPIService: APIService {
     private let tokenFieldKey: String
     
     // MARK: - Initializer
-    init(baseUrlString: String, tokenFieldKey: String = "user-access-token") {
+    init(baseUrlString: String, tokenFieldKey: String = "Authorization") {
         self.baseUrlString = baseUrlString
         self.tokenFieldKey = tokenFieldKey
         self.session = AF

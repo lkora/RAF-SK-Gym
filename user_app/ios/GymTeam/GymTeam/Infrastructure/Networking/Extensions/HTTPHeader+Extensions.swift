@@ -14,7 +14,6 @@ fileprivate var releaseVersionNumber: String {
 
 var defaultHeaderDictionary: [String: String] {
     [
-        "x-api-key": "FIbkdRIOsYaj82qYGk_WiE1WP4CSOOBZ2Yua8IkrB7mXj4RdWV1mhY8LKJ_cQ__B",
         "x-device-id": UIDevice.current.deviceId,
         "app-version": releaseVersionNumber,
         "user-agent" : "GymTeam (com.lukakorica.GymTeam; v\(releaseVersionNumber)"

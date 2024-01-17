@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Training {
+struct Training: Codable {
     var name: String
     var description: String
     var numberOfTrainers: Int
@@ -16,10 +16,10 @@ struct Training {
     var maxParticipants: Int?
 }
 
-struct Appointment: Identifiable {
-    let id = UUID()
+struct Appointment: Codable, Identifiable {
+    var id: Int
     var training: Training
     var date: Date
-    var participants: [User]
+    var participants: [User]                // TODO: This may be optional, i dont really need it except to show maybe more details and to know how many users have booked the appointment. Not the most performant way of doing stuff
     var isAvailable: Bool
 }

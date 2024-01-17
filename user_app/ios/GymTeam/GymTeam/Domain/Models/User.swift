@@ -7,13 +7,13 @@
 
 import Foundation
 
-struct User: Identifiable {
-    var id = UUID()
+struct User: Identifiable, Codable {
+    var id: String { return username }
     var userType: UserType
     var username: String
     var password: String
     var email: String
-    var dob: Date
+    var birthDate: Date
     var firstName: String
     var lastName: String
     var isBanned: Bool = false
@@ -23,3 +23,22 @@ struct User: Identifiable {
     var employmentDate: Date?
 }
 
+
+
+extension User: Equatable {
+    static func ==(lhs: User, rhs: User) -> Bool {
+        return lhs.id == rhs.id &&
+               lhs.userType == rhs.userType &&
+               lhs.username == rhs.username &&
+               lhs.password == rhs.password &&
+               lhs.email == rhs.email &&
+               lhs.birthDate == rhs.birthDate &&
+               lhs.firstName == rhs.firstName &&
+               lhs.lastName == rhs.lastName &&
+               lhs.isBanned == rhs.isBanned &&
+               lhs.memberCardNumber == rhs.memberCardNumber &&
+               lhs.scheduledTrainings == rhs.scheduledTrainings &&
+               lhs.gymName == rhs.gymName &&
+               lhs.employmentDate == rhs.employmentDate
+    }
+}
