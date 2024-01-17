@@ -52,7 +52,7 @@ public class ProfileController {
             case "admin": {
                 return ResponseEntity.status(HttpStatus.OK)
                         .body(new UserResponse(user.getUsername(), user.getEmail(), user.getFirstName(),
-                                user.getLastName(), user.getBirthDate()));
+                                user.getLastName(), user.getBirthDate(), "admin"));
             }
             case "client": {
                 var cl = service.findClient(user.getId());
@@ -62,8 +62,8 @@ public class ProfileController {
                 }
                 var client = cl.get();
                 var response = new ClientResponse(user.getUsername(), user.getEmail(), user.getFirstName(),
-                                user.getLastName(), user.getBirthDate(), client.getMemberCardNumber(),
-                                client.getNumberOfScheduledTrainings());
+                        user.getLastName(), user.getBirthDate(), client.getMemberCardNumber(),
+                        client.getNumberOfScheduledTrainings(), "client");
                 System.out.println(response);
                 return ResponseEntity.status(HttpStatus.OK)
                         .body(response);
@@ -77,7 +77,8 @@ public class ProfileController {
                 var manager = mgr.get();
                 return ResponseEntity.status(HttpStatus.OK)
                         .body(new ManagerResponse(user.getUsername(), user.getEmail(), user.getFirstName(),
-                                user.getLastName(), user.getBirthDate(), manager.getGymName(), manager.getHireDate()));
+                                user.getLastName(), user.getBirthDate(), manager.getGymName(), manager.getHireDate(),
+                                "manager"));
             }
             default: {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)

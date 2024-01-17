@@ -11,8 +11,8 @@ public class ClientResponse extends UserResponse {
     private final Long numberOfScheduledTrainings;
 
     public ClientResponse(String username, String email, String firstName, String lastName, LocalDate birthDate,
-                          Long memberCardNumber, Long numberOfScheduledTrainings) {
-        super(username, email, firstName, lastName, birthDate);
+                          Long memberCardNumber, Long numberOfScheduledTrainings, String userType) {
+        super(username, email, firstName, lastName, birthDate, userType);
         this.memberCardNumber = memberCardNumber;
         this.numberOfScheduledTrainings = numberOfScheduledTrainings;
     }
