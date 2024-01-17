@@ -30,7 +30,7 @@ struct MainView: View {
             }
             
             if viewModel.myUser.userType == .manager {
-                GymManagerView(gym: Gym(id: 0, name: "", description: "", numberOfTrainers: 2, trainings: generateDummyTrainings()))
+                GymManagerView(viewModel: GymManagerViewModel(appointments: [], gym: Gym(id: 0, name: "", description: "", numberOfTrainers: 0, trainings: []), apiService: viewModel.apiService, myUser: viewModel.myUser))
             }
             
             if viewModel.myUser.userType == .admin {
