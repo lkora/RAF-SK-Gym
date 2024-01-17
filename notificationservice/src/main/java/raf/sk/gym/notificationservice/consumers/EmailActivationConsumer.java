@@ -26,7 +26,7 @@ public class EmailActivationConsumer {
 
     @KafkaListener(topics = topicName)
     public void consume(String message) throws JsonProcessingException {
-        log.info("Consuming: {}", message);
+        System.out.println("Consuming: " +  message);
         ObjectMapper mapper = new ObjectMapper();
         ActivationEmailDto activationEmailDto = mapper.readValue(message, ActivationEmailDto.class);
         System.out.println(activationEmailDto);
@@ -40,12 +40,9 @@ public class EmailActivationConsumer {
                 .lastName() + ",\n\n" + "Please click the following link to activate your account:\n" + activationEmailDto.link());
 
         // Send the email
-        log.debug("Sending email");
         mailSender.send(mailMessage);
         // Log the email
-        log.trace("Attempting to save message");
         mailLogRepository.save(new EmailLog(topicName, activationEmailDto.receiver()
                 .email(), mailMessage.getSubject() + " --- " + mailMessage.getText()));
-        log.trace("Saved message successfully");
     }
 }

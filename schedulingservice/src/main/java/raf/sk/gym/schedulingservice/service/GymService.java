@@ -3,6 +3,7 @@ package raf.sk.gym.schedulingservice.service;
 import org.springframework.stereotype.Service;
 import raf.sk.gym.schedulingservice.model.Appointment;
 import raf.sk.gym.schedulingservice.model.Gym;
+import raf.sk.gym.schedulingservice.model.UserAppointment;
 import raf.sk.gym.schedulingservice.repository.AppointmentRepository;
 import raf.sk.gym.schedulingservice.repository.GymRepository;
 
@@ -46,5 +47,9 @@ public class GymService {
         gym.setName(name);
         gym.setDescription(description);
         gymRepository.save(gym);
+    }
+
+    public void addUserAppointment(UserAppointment appointment) {
+
     }
 }

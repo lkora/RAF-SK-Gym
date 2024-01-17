@@ -2,6 +2,10 @@ package raf.sk.gym.notificationservice.consumers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -17,27 +21,37 @@ public class TrainingScheduledConsumer {
     private final MailLogRepository mailLogRepository;
     private final String topicName = "training-scheduled";
 
-    public TrainingScheduledConsumer(JavaMailSender mailSender, MailLogRepository mailLogRepository) {this.mailSender = mailSender;
+    public TrainingScheduledConsumer(JavaMailSender mailSender, MailLogRepository mailLogRepository) {
+        this.mailSender = mailSender;
         this.mailLogRepository = mailLogRepository;
     }
 
-    @KafkaListener(topics=topicName)
+    @KafkaListener(topics = topicName)
     public void consumeTrainingScheduled(String message) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
+        ObjectMapper mapper = JsonMapper.builder()
+                .addModule(new ParameterNamesModule())
+                .addModule(new Jdk8Module())
+                .addModule(new JavaTimeModule()).build();
+
         TrainingScheduledDto trainingScheduledDto = mapper.readValue(message, TrainingScheduledDto.class);
 
         // Prepare an email
         SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo(trainingScheduledDto.receiver().email());
+        mailMessage.setTo(trainingScheduledDto.receiver()
+                .email());
         mailMessage.setSubject("Training Scheduled");
-        mailMessage.setText("Dear " + trainingScheduledDto.receiver().firstName() + " " + trainingScheduledDto.receiver().lastName() + ",\n\n"
-                + "Your " + trainingScheduledDto.training().trainingName() + " training has been scheduled for " + trainingScheduledDto.training().startTime() + ".");
+        mailMessage.setText("Dear " + trainingScheduledDto.receiver()
+                .firstName() + " " + trainingScheduledDto.receiver()
+                .lastName() + ",\n\n" + "Your " + trainingScheduledDto.training()
+                .trainingName() + " training has been scheduled for " + trainingScheduledDto.training()
+                .startTime() + ".");
 
         // Send the email
         mailSender.send(mailMessage);
 
         // Log the email
-        mailLogRepository.save(new EmailLog(topicName, trainingScheduledDto.receiver().email(), mailMessage.getSubject() + " --- " + mailMessage.getText()));
+        mailLogRepository.save(new EmailLog(topicName, trainingScheduledDto.receiver()
+                .email(), mailMessage.getSubject() + " --- " + mailMessage.getText()));
 
     }
 }

@@ -3,7 +3,9 @@ package raf.sk.gym.schedulingservice.model;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.Hibernate;
 
@@ -11,9 +13,11 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Embeddable
 @Getter
 @Setter
-@Embeddable
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserAppointmentId implements Serializable {
     @Serial
     private static final long serialVersionUID = 3341853760762571850L;

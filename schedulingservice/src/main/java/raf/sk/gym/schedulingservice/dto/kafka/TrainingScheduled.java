@@ -1,3 +1,3 @@
 package raf.sk.gym.schedulingservice.dto.kafka;
 
-public record TrainingScheduled(UserDto reciever, TrainingDto training) {}
+public record TrainingScheduled(UserDto receiver, TrainingDto training) {}

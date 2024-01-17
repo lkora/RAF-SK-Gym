@@ -1,13 +1,17 @@
 package raf.sk.gym.schedulingservice.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "user_appointments")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserAppointment {
     @EmbeddedId
     private UserAppointmentId id;

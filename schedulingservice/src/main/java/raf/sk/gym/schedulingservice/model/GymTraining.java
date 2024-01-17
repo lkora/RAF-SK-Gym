@@ -2,6 +2,7 @@ package raf.sk.gym.schedulingservice.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
@@ -12,6 +13,7 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "gym_training")
+@NoArgsConstructor
 public class GymTraining {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,4 +34,9 @@ public class GymTraining {
     @OneToMany(mappedBy = "gymTraining")
     private Set<Appointment> appointments = new LinkedHashSet<>();
 
+    public GymTraining(Gym gym, Training training, BigDecimal price) {
+        this.gym = gym;
+        this.training = training;
+        this.price = price;
+    }
 }
