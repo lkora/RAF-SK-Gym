@@ -13,7 +13,7 @@ final class MainViewModel: ObservableObject {
     @Published var myUser: User
     
     
-    private var apiService: AuthorizedAPIService
+    var apiService: AuthorizedAPIService
     private var gymService: GymAPIService
 
     
