@@ -12,7 +12,8 @@ struct RegisterManagerRequest: APIRequest {
     let endpoint: Endpoint = AuthEndpoint.registerManager
     let method = APIRequestMethod.post
     let body: Codable?
-    
+    var suffix: String? = nil
+
     init(params: RegisterManagerParams) {
         let encoder = JSONEncoder()
         body = try? encoder.encode(params)

@@ -7,13 +7,13 @@
 
 import Foundation
 
-struct User: Identifiable {
-    var id = UUID()
+struct User: Identifiable, Codable {
+    var id: String { return username }
     var userType: UserType
     var username: String
     var password: String
     var email: String
-    var dob: Date
+    var birthDate: Date
     var firstName: String
     var lastName: String
     var isBanned: Bool = false

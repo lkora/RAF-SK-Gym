@@ -28,4 +28,47 @@ final class GymAPIService {
     func registerManager(params: RegisterManagerParams, completion: @escaping ((Result<GeneralResponse, Error>) -> Void)) {
         apiService.perform(request: RegisterManagerRequest(params: params), completion: completion)
     }
+    
+    // Profile
+    func getProfile(completion: @escaping ((Result<User, Error>) -> Void)) {
+        apiService.perform(request: GetProfileRequest(), completion: completion)
+    }
+    
+    func editProfile(params: EditProfileParams, completion: @escaping ((Result<GeneralResponse, Error>) -> Void)) {
+        apiService.perform(request: EditProfileRequest(params: params), completion: completion)
+    }
+    
+    // Admin
+    func banUser(with username: String, completion: @escaping ((Result<GeneralResponse, Error>) -> Void)) {
+        apiService.perform(request: BanUserRequest(username: username), completion: completion)
+    }
+    
+    func unbanUser(with username: String, completion: @escaping ((Result<GeneralResponse, Error>) -> Void)) {
+        apiService.perform(request: UnbanUserRequest(username: username), completion: completion)
+    }
+    
+    func getUsers(completion: @escaping ((Result<[User], Error>) -> Void)) {
+        apiService.perform(request: UsersRequest(), completion: completion)
+    }
+    
+    // Scheduling
+    func getSchedule(completion: @escaping ((Result<[Appointment], Error>) -> Void)) {
+        apiService.perform(request: GetScheduleRequest(), completion: completion)
+    }
+    
+    func cancleAppointment(with id: Int, completion: @escaping ((Result<[GeneralResponse], Error>) -> Void)) {
+        apiService.perform(request: CancelAppointmentRequest(params: CancelAppointmentParams(id: id)), completion: completion)
+    }
+    
+    func makeAppointment(with appointmentId: Int, completion: @escaping ((Result<[GeneralResponse], Error>) -> Void)) {
+        apiService.perform(request: MakeAppointmentRequest(params: MakeAppointmentParams(id: appointmentId)), completion: completion)
+    }
+
+    
+    // Manager
+    func editGym(with new: Gym, completion: @escaping ((Result<[GeneralResponse], Error>) -> Void)) {
+        apiService.perform(request: EditGymRequest(with: new), completion: completion)
+
+    }
+    
 }

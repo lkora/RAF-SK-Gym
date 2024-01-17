@@ -24,7 +24,7 @@ struct RegisterView: View {
                 TextField("Username", text: $registrationViewModel.user.username)
                 SecureField("Password", text: $registrationViewModel.user.password)
                 TextField("Email", text: $registrationViewModel.user.email)
-                DatePicker("Date of Birth", selection: $registrationViewModel.user.dob, displayedComponents: .date)
+                DatePicker("Date of Birth", selection: $registrationViewModel.user.birthDate, displayedComponents: .date)
                 TextField("First Name", text: $registrationViewModel.user.firstName)
                 TextField("Last Name", text: $registrationViewModel.user.lastName)
                 

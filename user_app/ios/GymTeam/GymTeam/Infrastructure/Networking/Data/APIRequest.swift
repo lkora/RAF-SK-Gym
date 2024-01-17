@@ -12,6 +12,7 @@ protocol APIRequest {
     var method: APIRequestMethod { get }
     func urlRequest(baseURLString: String) -> URLRequest?
     var body: Codable? { get }
+    var suffix: String? { get }
 }
 
 extension APIRequest {
@@ -20,7 +21,7 @@ extension APIRequest {
             return nil
         }
         baseURL.appendPathComponent("/api")
-        baseURL.appendPathComponent(endpoint.fullPath)
+        baseURL.appendPathComponent(endpoint.fullPath + (suffix ?? ""))
         
         var urlRequest = URLRequest(url: baseURL)
         urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")

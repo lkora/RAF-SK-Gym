@@ -88,7 +88,7 @@ func generateDummyAppointments() -> [Appointment] {
         let date = Calendar.current.date(byAdding: .day, value: i, to: Date())!
         let participants = Array(dummyUsers.prefix((i % dummyUsers.count) + 1))
         let isAvailable = i % 3 != 0 // Change this to create a more varied availability
-        let appointment = Appointment(training: training, date: date, participants: participants, isAvailable: isAvailable)
+        let appointment = Appointment(id: 0, training: training, date: date, participants: participants, isAvailable: isAvailable)
         dummyAppointments.append(appointment)
     }
 

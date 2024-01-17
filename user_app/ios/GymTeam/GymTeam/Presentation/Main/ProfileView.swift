@@ -19,7 +19,7 @@ struct ProfileView: View {
                 TextField("Username", text: $user.username)
                 SecureField("Password", text: $user.password)
                 TextField("Email", text: $user.email)
-                DatePicker("Date of Birth", selection: $user.dob, displayedComponents: .date)
+                DatePicker("Date of Birth", selection: $user.birthDate, displayedComponents: .date)
                 TextField("First Name", text: $user.firstName)
                 TextField("Last Name", text: $user.lastName)
                 
@@ -47,5 +47,5 @@ struct ProfileView: View {
 }
 
 #Preview {
-    ProfileView(user: .constant(User(userType: .client, username: "", password: "", email: "", dob: Date(), firstName: "", lastName: "", memberCardNumber: nil, scheduledTrainings: nil, gymName: nil, employmentDate: nil)))
+    ProfileView(user: .constant(User(userType: .client, username: "", password: "", email: "", birthDate: Date(), firstName: "", lastName: "", memberCardNumber: nil, scheduledTrainings: nil, gymName: nil, employmentDate: nil)))
 }

@@ -31,7 +31,7 @@ struct UserRow: View {
                 .font(.headline)
             Text("User Type: \(user.userType.name)")
             Text("Email: \(user.email)")
-            Text("Date of Birth: \(user.dob)")
+            Text("Date of Birth: \(user.birthDate)")
             Button(user.isBanned ? "Unban" : "Ban") {
                 // TODO: Ban API request
                 user.isBanned.toggle()
@@ -57,7 +57,7 @@ func generateDummyUsers() -> [User] {
         let scheduledTrainings = i % 2 == 0 ? i : nil
         let gymName = i % 2 != 0 ? "Gym\(i)" : nil
         let employmentDate = i % 2 != 0 ? Date() : nil
-        let user = User(userType: userType, username: username, password: password, email: email, dob: dob, firstName: firstName, lastName: lastName, isBanned: isBanned, memberCardNumber: memberCardNumber, scheduledTrainings: scheduledTrainings, gymName: gymName, employmentDate: employmentDate)
+        let user = User(userType: userType, username: username, password: password, email: email, birthDate: dob, firstName: firstName, lastName: lastName, isBanned: isBanned, memberCardNumber: memberCardNumber, scheduledTrainings: scheduledTrainings, gymName: gymName, employmentDate: employmentDate)
         dummyUsers.append(user)
     }
 
