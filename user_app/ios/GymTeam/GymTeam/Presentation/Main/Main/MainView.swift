@@ -20,7 +20,7 @@ struct MainView: View {
     var body: some View {
         TabView(selection: $selectedTab) {
             if viewModel.myUser.userType == .client {
-                AppointmentView()
+                AppointmentView(viewModel: AppointmentViewModel(appointments: [], apiService: viewModel.apiService, myUser: viewModel.myUser))
                     .tabItem {
                         Image(systemName: "calendar")
                         Text("Appointments")

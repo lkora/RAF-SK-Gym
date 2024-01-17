@@ -10,7 +10,12 @@ import SwiftUI
 struct AppointmentView: View {
     @State private var searchText = ""
     @State private var sortOption = 0
-    @State var appointments: [Appointment] = [] // This should be your actual data
+    
+    @ObservedObject var viewModel: AppointmentViewModel
+    
+    init(viewModel: AppointmentViewModel) {
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         NavigationStack {
@@ -25,7 +30,7 @@ struct AppointmentView: View {
                 .padding()
                 
                 List {
-                    ForEach(appointments.filter {
+                    ForEach(viewModel.appointments.filter {
                         self.searchText.isEmpty ? true : $0.training.name.lowercased().contains(self.searchText.lowercased())
                     }.sorted(by: {
                         switch sortOption {
@@ -36,11 +41,16 @@ struct AppointmentView: View {
                         default: return false
                         }
                     })) { appointment in
-                        AppointmentRow(appointment: appointment)
+                        AppointmentRow(appointment: appointment) {
+                            viewModel.handle(appointment)
+                        }
                     }
                 }.searchable(text: $searchText)
                 
             }
+            .onAppear(perform: {
+                viewModel.loadAppointments()
+            })
             .navigationTitle("Appointments")
         }
     }
@@ -48,6 +58,7 @@ struct AppointmentView: View {
 
 struct AppointmentRow: View {
     var appointment: Appointment
+    let action: () -> Void
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -57,7 +68,7 @@ struct AppointmentRow: View {
             Text("Date: \(appointment.date)")
             Text("Available: \(appointment.isAvailable ? "Yes" : "No")")
             Button(appointment.isAvailable ? "Schedule" : "Cancel") {
-                // TODO: Handle schedule or cancle here
+                action()
             }
         }
     }
@@ -65,7 +76,7 @@ struct AppointmentRow: View {
 
 
 #Preview {
-    AppointmentView(appointments: generateDummyAppointments())
+    AppointmentView(viewModel: AppointmentViewModel(appointments: generateDummyAppointments(), apiService: AlamofireAPIService(baseUrlString: ""), myUser: generateDummyUsers().first!))
 }
 
 func generateDummyTrainings() -> [Training] {
