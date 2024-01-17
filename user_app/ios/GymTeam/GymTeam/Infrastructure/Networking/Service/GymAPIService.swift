@@ -67,8 +67,12 @@ final class GymAPIService {
     
     // Manager
     func editGym(with new: Gym, completion: @escaping ((Result<[GeneralResponse], Error>) -> Void)) {
-        apiService.perform(request: EditGymRequest(with: new), completion: completion)
-
+        apiService.perform(request: EditGymRequest(params: EditGymParams(id: new.id, name: new.name, description: new.description, numberOfTrainers: new.numberOfTrainers)), completion: completion)
     }
     
+    func addTraining(new training: Training, completion: @escaping ((Result<[GeneralResponse], Error>) -> Void)) {
+        apiService.perform(request: AddTrainingRequest(new: training), completion: completion)
+    }
+    
+
 }

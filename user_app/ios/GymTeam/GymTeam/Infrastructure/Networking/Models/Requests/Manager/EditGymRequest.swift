@@ -13,8 +13,16 @@ struct EditGymRequest: APIRequest {
     let body: Codable?
     var suffix: String?
     
-    init(with new: Gym) {
+    init(params: EditGymParams) {
         let encoder = JSONEncoder()
-        body = try? encoder.encode(new)
+        body = try? encoder.encode(params)
     }
+}
+
+
+struct EditGymParams: Codable {
+    var id: Int
+    var name: String
+    var description: String
+    var numberOfTrainers: Int
 }

@@ -31,6 +31,8 @@
 		1B87A8332B575F4F0063CB87 /* ManagerEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B87A8322B575F4F0063CB87 /* ManagerEndpoint.swift */; };
 		1B87A8352B5760C30063CB87 /* MakeAppointmentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B87A8342B5760C30063CB87 /* MakeAppointmentRequest.swift */; };
 		1B87A8382B5761750063CB87 /* EditGymRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B87A8372B5761750063CB87 /* EditGymRequest.swift */; };
+		1B87A83A2B5769A90063CB87 /* AddTrainingRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B87A8392B5769A90063CB87 /* AddTrainingRequest.swift */; };
+		1B87A83C2B576A820063CB87 /* UsersListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B87A83B2B576A820063CB87 /* UsersListViewModel.swift */; };
 		1B91BF182B5322FA004570D7 /* GymTeamApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B91BF172B5322FA004570D7 /* GymTeamApp.swift */; };
 		1B91BF1A2B5322FA004570D7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B91BF192B5322FA004570D7 /* ContentView.swift */; };
 		1B91BF1C2B5322FA004570D7 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B91BF1B2B5322FA004570D7 /* Globals.swift */; };
@@ -96,6 +98,8 @@
 		1B87A8322B575F4F0063CB87 /* ManagerEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagerEndpoint.swift; sourceTree = "<group>"; };
 		1B87A8342B5760C30063CB87 /* MakeAppointmentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeAppointmentRequest.swift; sourceTree = "<group>"; };
 		1B87A8372B5761750063CB87 /* EditGymRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditGymRequest.swift; sourceTree = "<group>"; };
+		1B87A8392B5769A90063CB87 /* AddTrainingRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTrainingRequest.swift; sourceTree = "<group>"; };
+		1B87A83B2B576A820063CB87 /* UsersListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersListViewModel.swift; sourceTree = "<group>"; };
 		1B91BF142B5322FA004570D7 /* GymTeam.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GymTeam.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B91BF172B5322FA004570D7 /* GymTeamApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GymTeamApp.swift; sourceTree = "<group>"; };
 		1B91BF192B5322FA004570D7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -257,6 +261,7 @@
 			isa = PBXGroup;
 			children = (
 				1B87A8372B5761750063CB87 /* EditGymRequest.swift */,
+				1B87A8392B5769A90063CB87 /* AddTrainingRequest.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -483,6 +488,7 @@
 			isa = PBXGroup;
 			children = (
 				1B9A7DA92B54AE7900698B92 /* UsersListView.swift */,
+				1B87A83B2B576A820063CB87 /* UsersListViewModel.swift */,
 			);
 			path = UsersList;
 			sourceTree = "<group>";
@@ -593,7 +599,9 @@
 				1B91BF2D2B532565004570D7 /* APIService.swift in Sources */,
 				1B91BF2F2B53258C004570D7 /* APIRequest.swift in Sources */,
 				1B9A7D9D2B54840000698B92 /* ProfileView.swift in Sources */,
+				1B87A83A2B5769A90063CB87 /* AddTrainingRequest.swift in Sources */,
 				1B9A7DA12B549A1A00698B92 /* MainView.swift in Sources */,
+				1B87A83C2B576A820063CB87 /* UsersListViewModel.swift in Sources */,
 				1B87A81A2B5747890063CB87 /* GetProfileRequest.swift in Sources */,
 				1B87A80F2B5724650063CB87 /* AppDelegate.swift in Sources */,
 				1B87A8012B571B5A0063CB87 /* GymAPIService.swift in Sources */,
