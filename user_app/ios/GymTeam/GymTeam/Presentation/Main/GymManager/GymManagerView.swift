@@ -20,7 +20,7 @@ struct GymManagerView: View {
                     TextField("Description", text: $viewModel.gym.description)
                     TextField("Number of Trainers", value: $viewModel.gym.numberOfTrainers, formatter: NumberFormatter())
                     Button("Save changes") {
-                        
+                        viewModel.saveGymChanges()
                     }
                 }
                 Section(header: Text("Trainings")) {
