@@ -8,22 +8,33 @@
 import SwiftUI
 
 struct UsersListView: View {
-    @State var users: [User] = [] // This should be your actual data
+    @ObservedObject private var viewModel: UsersListViewModel
+    
+    init(viewModel: UsersListViewModel) {
+        self.viewModel = viewModel
+    }
+    
 
     var body: some View {
         NavigationStack {
             List {
-                ForEach($users) { user in
-                    UserRow(user: user)
+                ForEach($viewModel.users) { user in
+                    UserRow(user: user) {
+                        viewModel.banUnban(user.wrappedValue)
+                    }
                 }
             }
             .navigationTitle("Users")
+            .onAppear(perform: {
+                
+            })
         }
     }
 }
 
 struct UserRow: View {
     @Binding var user: User
+    let action: () -> Void
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -33,8 +44,7 @@ struct UserRow: View {
             Text("Email: \(user.email)")
             Text("Date of Birth: \(user.birthDate)")
             Button(user.isBanned ? "Unban" : "Ban") {
-                // TODO: Ban API request
-                user.isBanned.toggle()
+                action()
             }
             .foregroundStyle(!user.isBanned ? .red : .accentColor)
         }
@@ -66,5 +76,6 @@ func generateDummyUsers() -> [User] {
 
 
 #Preview {
-    UsersListView(users: generateDummyUsers())
+    let users = generateDummyUsers()
+    return UsersListView(viewModel: UsersListViewModel(apiService: AlamofireAPIService(baseUrlString: ""), myUser: users.first!, users: users))
 }

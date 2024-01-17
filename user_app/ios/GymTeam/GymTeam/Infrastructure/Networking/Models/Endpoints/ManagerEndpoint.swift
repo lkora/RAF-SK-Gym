@@ -9,6 +9,8 @@ import Foundation
 
 enum ManagerEndpoint: Endpoint {
     case editGym
+    case newTraining
+    case deleteTraining
     
     var basePath: String {
         "/manager"
@@ -18,6 +20,10 @@ enum ManagerEndpoint: Endpoint {
         switch self {
         case .editGym:
             return "/edit-gym"
+        case .newTraining:
+            return "/new-training"
+        case .deleteTraining:
+            return "/delete-training"
         }
     }
 }
