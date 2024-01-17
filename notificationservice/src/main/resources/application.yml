@@ -1,3 +1,4 @@
+
 server:
   port: 8083
 spring:
@@ -7,12 +8,27 @@ spring:
     bootstrap-servers: localhost:9092
     consumer:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
       group-id: myGroup
       auto-offset-reset: earliest
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: 'raf.sk.gym.userservice.dto.kafka'
+#            value:
+#              default:
+#                type: 'raf.sk.gym.notificationservice.consumers.objects.ActivationEmailDto'
+          deserializer:
+            value:
+              delegate:
+                class: org.apache.kafka.common.serialization.StringDeserializer
   threads:
     virtual:
       enabled: true
+  sql:
+    init:
+      mode: always
 eureka:
   client:
     service-url:
@@ -20,3 +36,8 @@ eureka:
     fetch-registry: false
   instance:
     prefer-ip-address: true
+logging:
+  level:
+    org.apache.kafka: WARN
+    kafka: WARN
+    kafka.admin: WARN
