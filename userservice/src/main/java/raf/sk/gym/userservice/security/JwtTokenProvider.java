@@ -3,24 +3,28 @@ package raf.sk.gym.userservice.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import javax.crypto.SecretKey;
+import java.security.KeyFactory;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 import java.util.Date;
 
 @Component
 public class JwtTokenProvider {
     private final long jwtExpirationInMillis = 60 * 60 * 1000 * 60;
-    @Value("${jwt.secret}")
-    private String jwtSecret;
-
     private final GymUserDetailsService userDetailsService;
+    @Value("${jwt.private_key}")
+    private String jwtPrivateKey;
+    @Value("${jwt.public_key}")
+    private String jwtPublicKey;
 
     public JwtTokenProvider(GymUserDetailsService userDetailsService) {this.userDetailsService = userDetailsService;}
 
@@ -38,14 +42,14 @@ public class JwtTokenProvider {
                 .issuer("gym.raf.edu.rs")
                 .issuedAt(new Date())
                 .expiration(expiryDate)
-                .signWith(getKey())
+                .signWith(getPrivateKey(), Jwts.SIG.RS512)
                 .compact();
     }
 
     public String getUsernameFromToken(String token) {
         token = getJwtFromHeader(token);
         Claims claims = Jwts.parser()
-                .verifyWith(getKey())
+                .verifyWith(getPublicKey())
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
@@ -66,19 +70,16 @@ public class JwtTokenProvider {
      */
     public boolean validateToken(String jwt) {
         var parser = Jwts.parser()
-                .verifyWith(getKey())
+                .verifyWith(getPublicKey())
                 .requireIssuer("gym.raf.edu.rs")
                 .build();
         parser.parseSignedClaims(jwt);
         return true;
     }
 
-    /**
-     * Creates a dummy UserDetails object for use in JwtFilter.
-     */
     Authentication getAuthentication(String token) {
         Claims claims = Jwts.parser()
-                .verifyWith(getKey())
+                .verifyWith(getPublicKey())
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
@@ -87,9 +88,24 @@ public class JwtTokenProvider {
         return new UsernamePasswordAuthenticationToken(userDetails, token, userDetails.getAuthorities());
     }
 
-    private SecretKey getKey() {
-        byte[] keyBytes = Base64.getDecoder()
-                .decode(jwtSecret);
-        return Keys.hmacShaKeyFor(keyBytes);
+    private PrivateKey getPrivateKey() {
+        try {
+            byte[] keyBytes = Base64.getDecoder()
+                    .decode(jwtPrivateKey.getBytes());
+            PKCS8EncodedKeySpec X509privateKey = new PKCS8EncodedKeySpec(keyBytes);
+            return KeyFactory.getInstance("RSA").generatePrivate(X509privateKey);
+        } catch (Exception ex) {
+            throw new AssertionError("Failed to get private key", ex);
+        }
+    }
+
+    private PublicKey getPublicKey() {
+        try {
+        byte[] keyBytes = Base64.getDecoder().decode(jwtPublicKey.getBytes());
+        X509EncodedKeySpec X509publicKey = new X509EncodedKeySpec(keyBytes);
+        return KeyFactory.getInstance("RSA").generatePublic(X509publicKey);
+    } catch (Exception ex) {
+        throw new AssertionError("Failed to get public key", ex);
+    }
     }
 }
