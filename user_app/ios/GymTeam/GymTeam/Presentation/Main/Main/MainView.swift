@@ -34,7 +34,7 @@ struct MainView: View {
             }
             
             if viewModel.myUser.userType == .admin {
-                UsersListView()
+                UsersListView(viewModel: UsersListViewModel(apiService: viewModel.apiService, myUser: viewModel.myUser))
                     .tabItem {
                         Image(systemName: "person.3")
                         Text("Users")
@@ -44,7 +44,7 @@ struct MainView: View {
             }
             
 
-            ProfileView(user: $viewModel.myUser)
+            ProfileView(viewModel: ProfileViewModel(apiService: viewModel.apiService, myUser: viewModel.myUser))
                 .tabItem {
                     Image(systemName: "person")
                     Text("Profile")
