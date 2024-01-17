@@ -12,10 +12,9 @@ import UIKit
 import SwiftUI
 
 final class RegistrationViewModel: ObservableObject {
-    @Published var user = User(userType: .client, username: "", password: "", email: "", dob: Date(), firstName: "", lastName: "", memberCardNumber: nil, scheduledTrainings: nil, gymName: nil, employmentDate: nil)
+    @Published var user = User(userType: .client, username: "", password: "", email: "", birthDate: Date(), firstName: "", lastName: "", memberCardNumber: nil, scheduledTrainings: nil, gymName: nil, employmentDate: nil)
         
     private var apiService: AuthorizedAPIService
-    
     private var gymService: GymAPIService
     
     init(apiService: AuthorizedAPIService) {
@@ -25,7 +24,7 @@ final class RegistrationViewModel: ObservableObject {
     
     func register() {
         if user.userType == .client {
-            gymService.registerClient(params: RegisterClientParams(userName: user.username, password: user.password, email: user.email, birthDate: user.dob, firstName: user.firstName, lastName: user.lastName)) { result in
+            gymService.registerClient(params: RegisterClientParams(userName: user.username, password: user.password, email: user.email, birthDate: user.birthDate, firstName: user.firstName, lastName: user.lastName)) { result in
                 switch result {
                 case .success(_):
                     debugPrint("Sucessfully registered a Client!")
@@ -34,7 +33,7 @@ final class RegistrationViewModel: ObservableObject {
                 }
             }
         } else if user.userType == .manager {
-            gymService.registerManager(params: RegisterManagerParams(userName: user.username, password: user.password, email: user.email, birthDate: user.dob, firstName: user.firstName, lastName: user.lastName, gymName: user.gymName ?? "", dateOfEmployment: user.employmentDate ?? Date())) { result in
+            gymService.registerManager(params: RegisterManagerParams(userName: user.username, password: user.password, email: user.email, birthDate: user.birthDate, firstName: user.firstName, lastName: user.lastName, gymName: user.gymName ?? "", dateOfEmployment: user.employmentDate ?? Date())) { result in
                 switch result {
                 case .success(_):
                     debugPrint("Sucessfully registered a Manager!")

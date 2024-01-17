@@ -46,6 +46,7 @@ final class LoginViewModel: ObservableObject {
                 self?.isLoggedIn = true
             case .failure(let error):
                 debugPrint("Error: \(error)")
+                self?.isLoggedIn = false
             }
         }
     }

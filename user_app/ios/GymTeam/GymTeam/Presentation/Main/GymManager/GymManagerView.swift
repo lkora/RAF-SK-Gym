@@ -84,7 +84,8 @@ struct AddAppointmentView: View {
 }
 
 
-struct Gym {
+struct Gym: Codable, Identifiable {
+    var id: Int
     var name: String
     var description: String
     var numberOfTrainers: Int
@@ -93,5 +94,5 @@ struct Gym {
 
 
 #Preview {
-    GymManagerView( gym: Gym(name: "New Gym", description: "Best gym in town ready to dominate!", numberOfTrainers: 12, trainings: generateDummyTrainings()), appointments: generateDummyAppointments())
+    GymManagerView( gym: Gym(id: 0, name: "New Gym", description: "Best gym in town ready to dominate!", numberOfTrainers: 12, trainings: generateDummyTrainings()), appointments: generateDummyAppointments())
 }

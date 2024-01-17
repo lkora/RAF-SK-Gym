@@ -12,7 +12,8 @@ struct LoginRequest: APIRequest {
     let endpoint: Endpoint = AuthEndpoint.login
     let method = APIRequestMethod.post
     let body: Codable?
-    
+    var suffix: String? = nil
+
     init(params: LoginParams) {
         let encoder = JSONEncoder()
         body = try? encoder.encode(params)
