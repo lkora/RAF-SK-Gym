@@ -8,22 +8,33 @@
 import SwiftUI
 
 struct UsersListView: View {
-    @State var users: [User] = [] // This should be your actual data
+    @ObservedObject private var viewModel: UsersListViewModel
+    
+    init(viewModel: UsersListViewModel) {
+        self.viewModel = viewModel
+    }
+    
 
     var body: some View {
         NavigationStack {
             List {
-                ForEach($users) { user in
-                    UserRow(user: user)
+                ForEach($viewModel.users) { user in
+                    UserRow(user: user) {
+                        viewModel.banUnban(user.wrappedValue)
+                    }
                 }
             }
             .navigationTitle("Users")
+            .onAppear(perform: {
+                
+            })
         }
     }
 }
 
 struct UserRow: View {
     @Binding var user: User
+    let action: () -> Void
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -31,10 +42,9 @@ struct UserRow: View {
                 .font(.headline)
             Text("User Type: \(user.userType.name)")
             Text("Email: \(user.email)")
-            Text("Date of Birth: \(user.dob)")
+            Text("Date of Birth: \(user.birthDate)")
             Button(user.isBanned ? "Unban" : "Ban") {
-                // TODO: Ban API request
-                user.isBanned.toggle()
+                action()
             }
             .foregroundStyle(!user.isBanned ? .red : .accentColor)
         }
@@ -57,7 +67,7 @@ func generateDummyUsers() -> [User] {
         let scheduledTrainings = i % 2 == 0 ? i : nil
         let gymName = i % 2 != 0 ? "Gym\(i)" : nil
         let employmentDate = i % 2 != 0 ? Date() : nil
-        let user = User(userType: userType, username: username, password: password, email: email, dob: dob, firstName: firstName, lastName: lastName, isBanned: isBanned, memberCardNumber: memberCardNumber, scheduledTrainings: scheduledTrainings, gymName: gymName, employmentDate: employmentDate)
+        let user = User(userType: userType, username: username, password: password, email: email, birthDate: dob, firstName: firstName, lastName: lastName, isBanned: isBanned, memberCardNumber: memberCardNumber, scheduledTrainings: scheduledTrainings, gymName: gymName, employmentDate: employmentDate)
         dummyUsers.append(user)
     }
 
@@ -66,5 +76,6 @@ func generateDummyUsers() -> [User] {
 
 
 #Preview {
-    UsersListView(users: generateDummyUsers())
+    let users = generateDummyUsers()
+    return UsersListView(viewModel: UsersListViewModel(apiService: AlamofireAPIService(baseUrlString: ""), myUser: users.first!, users: users))
 }

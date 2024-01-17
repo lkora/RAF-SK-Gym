@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum UserType: String {
+enum UserType: String, Codable {
     case client
     case manager
     case admin
