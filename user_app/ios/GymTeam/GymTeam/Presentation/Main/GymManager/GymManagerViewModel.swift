@@ -47,4 +47,15 @@ final class GymManagerViewModel: ObservableObject {
         }
     }
     
+    func saveGymChanges() {
+        gymService.editGym(with: gym) { result in
+            switch result {
+            case .success(let success):
+                break
+            case .failure(let failure):
+                debugPrint(failure)
+            }
+        }
+    }
+    
 }
