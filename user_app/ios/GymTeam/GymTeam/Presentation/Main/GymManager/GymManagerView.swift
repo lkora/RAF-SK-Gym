@@ -8,26 +8,27 @@
 import SwiftUI
 
 struct GymManagerView: View {
-    @State var gym: Gym
-    @State var appointments: [Appointment] = []
 
+    @ObservedObject var viewModel: GymManagerViewModel
+    
+    
     var body: some View {
         NavigationStack {
             Form {
                 Section(header: Text("Gym Details")) {
-                    TextField("Name", text: $gym.name)
-                    TextField("Description", text: $gym.description)
-                    TextField("Number of Trainers", value: $gym.numberOfTrainers, formatter: NumberFormatter())
+                    TextField("Name", text: $viewModel.gym.name)
+                    TextField("Description", text: $viewModel.gym.description)
+                    TextField("Number of Trainers", value: $viewModel.gym.numberOfTrainers, formatter: NumberFormatter())
                     Button("Save changes") {
                         
                     }
                 }
                 Section(header: Text("Trainings")) {
-                    ForEach(gym.trainings.indices, id: \.self) { index in
+                    ForEach(viewModel.gym.trainings.indices, id: \.self) { index in
                         HStack {
-                            TextField("Training Name", text: $gym.trainings[index].name)
-                            TextField("Price", value: $gym.trainings[index].price, formatter: NumberFormatter())
-                            Toggle("group", isOn: $gym.trainings[index].isGroup)
+                            TextField("Training Name", text: $viewModel.gym.trainings[index].name)
+                            TextField("Price", value: $viewModel.gym.trainings[index].price, formatter: NumberFormatter())
+                            Toggle("group", isOn: $viewModel.gym.trainings[index].isGroup)
                                 .toggleStyle(.button)
                         }
                     }
@@ -37,13 +38,18 @@ struct GymManagerView: View {
                 }
                 
                 Section(header: Text("Appointments")) {
-                    ForEach(appointments) { appointment in
-                        AppointmentRow(appointment: appointments[appointments.firstIndex(where: { $0.id == appointment.id })!])
+                    ForEach(viewModel.appointments) { appointment in
+                        AppointmentRow(appointment: viewModel.appointments[viewModel.appointments.firstIndex(where: { $0.id == appointment.id })!]) {
+                            viewModel.cancleAppointment(appointment)
+                        }
                     }
                 }
 
                 
                 
+            }
+            .onAppear {
+                viewModel.loadAppointments()
             }
             .navigationTitle("Gym Manager")
             .toolbar {
@@ -58,6 +64,7 @@ struct GymManagerView: View {
     
     struct AppointmentRow: View {
         var appointment: Appointment
+        let action: () -> Void
 
         var body: some View {
             VStack(alignment: .leading) {
@@ -67,7 +74,7 @@ struct GymManagerView: View {
                 Text("Date: \(appointment.date)")
                 Text("Available: \(appointment.isAvailable ? "Yes" : "No")")
                 Button("Cancel") {
-                    // TODO: Handle cancel here
+                    action()
                 }
                 .foregroundStyle(.red)
             }
@@ -94,5 +101,5 @@ struct Gym: Codable, Identifiable {
 
 
 #Preview {
-    GymManagerView( gym: Gym(id: 0, name: "New Gym", description: "Best gym in town ready to dominate!", numberOfTrainers: 12, trainings: generateDummyTrainings()), appointments: generateDummyAppointments())
+    GymManagerView( viewModel: GymManagerViewModel(appointments: generateDummyAppointments(), gym: Gym(id: 0, name: "New Gym", description: "Best gym in town ready to dominate!", numberOfTrainers: 12, trainings: generateDummyTrainings()), apiService: AlamofireAPIService(baseUrlString: ""), myUser: generateDummyUsers().first!))
 }
