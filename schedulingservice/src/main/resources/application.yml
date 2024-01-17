@@ -1,0 +1,30 @@
+server:
+  port: 8085
+  servlet:
+    context-path: /api
+spring:
+  application:
+    name: schedulingservice
+  sql:
+    init:
+      mode: always
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+  threads:
+    virtual:
+      enabled: true
+eureka:
+  client:
+    service-url:
+      "defaultZone": ${EUREKA_URI:http://localhost:8761/eureka}
+    fetch-registry: false
+  instance:
+    prefer-ip-address: true
+logging:
+  level:
+    org.apache.kafka: WARN
+    kafka: WARN
+    kafka.admin: WARN

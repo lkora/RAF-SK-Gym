@@ -17,7 +17,6 @@ public class TestNotificationserviceApplication {
                 .with(TestNotificationserviceApplication.class)
                 .run(args);
     }
-
     /**
      * Instantiates and configures a PostgreSQL container.
      */

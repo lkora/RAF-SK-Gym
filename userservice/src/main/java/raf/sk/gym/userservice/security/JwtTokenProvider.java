@@ -77,7 +77,7 @@ public class JwtTokenProvider {
         return true;
     }
 
-    Authentication getAuthentication(String token) {
+    public Authentication getAuthentication(String token) {
         Claims claims = Jwts.parser()
                 .verifyWith(getPublicKey())
                 .build()
@@ -93,7 +93,8 @@ public class JwtTokenProvider {
             byte[] keyBytes = Base64.getDecoder()
                     .decode(jwtPrivateKey.getBytes());
             PKCS8EncodedKeySpec X509privateKey = new PKCS8EncodedKeySpec(keyBytes);
-            return KeyFactory.getInstance("RSA").generatePrivate(X509privateKey);
+            return KeyFactory.getInstance("RSA")
+                    .generatePrivate(X509privateKey);
         } catch (Exception ex) {
             throw new AssertionError("Failed to get private key", ex);
         }
@@ -101,11 +102,13 @@ public class JwtTokenProvider {
 
     private PublicKey getPublicKey() {
         try {
-        byte[] keyBytes = Base64.getDecoder().decode(jwtPublicKey.getBytes());
-        X509EncodedKeySpec X509publicKey = new X509EncodedKeySpec(keyBytes);
-        return KeyFactory.getInstance("RSA").generatePublic(X509publicKey);
-    } catch (Exception ex) {
-        throw new AssertionError("Failed to get public key", ex);
-    }
+            byte[] keyBytes = Base64.getDecoder()
+                    .decode(jwtPublicKey.getBytes());
+            X509EncodedKeySpec X509publicKey = new X509EncodedKeySpec(keyBytes);
+            return KeyFactory.getInstance("RSA")
+                    .generatePublic(X509publicKey);
+        } catch (Exception ex) {
+            throw new AssertionError("Failed to get public key", ex);
+        }
     }
 }
